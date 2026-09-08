@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/*
+ * PennPromise Capital — Admin Dashboard design tokens.
+ *
+ * Light values are taken verbatim from the Figma-rendered code (see project
+ * CLAUDE.md "Design tokens"). Dark values are lifted from the Figma dark
+ * artboards (page #0e0e0e, surface #171717, near-white text, white-alpha
+ * lines); the semantic *-subtle dark values are provisional and will be
+ * reconciled as each screen is built.
+ *
+ * Theme model (three layers):
+ *   1. :root                              → light, and the base every mode
+ *                                           inherits from.
+ *   2. @media (prefers-color-scheme: dark)
+ *        :root:not([data-theme="light"])  → dark when the OS asks for it and
+ *                                           the user hasn't forced light.
+ *   3. :root[data-theme="dark"]           → dark when the user forces it.
+ * "system" stores no data-theme attribute, so layer 2 governs it. An explicit
+ * "light" choice sets data-theme="light", which layer 2's :not() excludes.
+ *
+ * Consume tokens through Tailwind theme classes (bg-primary,
+ * text-muted-foreground, border-input, …) — never inline a raw hex in a
+ * className. This file is the single source of truth for colour/radius.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Radius scale — 8px small, 10–15px inputs/buttons, 15–20px cards */
+  --radius: 0.625rem; /* 10px base */
+
+  /* Surfaces */
+  --background: #f9faff; /* page background */
+  --foreground: #101828; /* text primary */
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #101828;
+  --popover: #ffffff;
+  --popover-foreground: #101828;
+
+  /* Brand */
+  --primary: #ff695b;
+  --primary-foreground: #ffffff;
+  --brand-gradient-from: #ff695b;
+  --brand-gradient-to: #f6b331;
+
+  /* Neutrals */
+  --secondary: #f1f5f9;
+  --secondary-foreground: #101828;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b; /* text muted */
+  --accent: #f1f5f9;
+  --accent-foreground: #101828;
+  --text-secondary: #475467;
+
+  /* Semantic */
+  --info: #0047ab; /* links / info */
+  --info-foreground: #ffffff;
+  --success: #16a34a;
+  --success-subtle: #dcfce7;
+  --warning: #b45309;
+  --warning-subtle: #fef3c7;
+  --destructive: #b91c1c;
+  --destructive-subtle: #fee2e2;
+  --destructive-foreground: #ffffff;
+
+  /* Lines & controls */
+  --border: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --input: #d7d7d7; /* form field border */
+  --ring: #ff695b;
+
+  /* Always-dark navy surface (stat callouts that stay dark in both themes,
+     like the coral promo panels stay coral). */
+  --surface-dark: #101828;
+  --surface-dark-foreground: #ffffff;
+
+  /* Data-viz accents — Figma chart/KPI colours, not semantic. */
+  --chart-blue: #2e5bff;
+  --chart-green: #16a34a;
+  --chart-red: #ff6b6b;
+  --chart-gold: #f6b331;
+  --chart-series-users: #03053e;
+  --chart-series-aum: #2e5bff;
+
+  /* Sidebar — brand gradient #ff695b -> #f6b331. Unchanged in dark mode: the
+     Figma dark artboards keep the coloured gradient rail. */
+  --sidebar: #ff695b;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #ff695b;
+  --sidebar-accent: rgba(255, 255, 255, 0.16);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.2);
+  --sidebar-ring: rgba(255, 255, 255, 0.7);
+}
+
+/*
+ * Dark palette. Defined once here and referenced by both dark selectors below
+ * via a shared declaration block would be ideal, but CSS has no mixins, so the
+ * values are repeated in the two selectors. Keep them in sync.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: #0e0e0e;
+    --foreground: #f4f4f5;
+    --surface: #171717;
+    --card: #171717;
+    --card-foreground: #f4f4f5;
+    --popover: #1c1c1c;
+    --popover-foreground: #f4f4f5;
+
+    --primary: #ff695b;
+    --primary-foreground: #ffffff;
+
+    --secondary: #262626;
+    --secondary-foreground: #f4f4f5;
+    --muted: #1f1f1f;
+    --muted-foreground: #a1a1aa;
+    --accent: #262626;
+    --accent-foreground: #f4f4f5;
+    --text-secondary: #d4d4d8;
+
+    --info: #4d8dff;
+    --info-foreground: #0e0e0e;
+    --success: #22c55e;
+    --success-subtle: #14311f;
+    --warning: #f59e0b;
+    --warning-subtle: #3a2a0a;
+    --destructive: #ef4444;
+    --destructive-subtle: #3a1414;
+    --destructive-foreground: #0e0e0e;
+
+    --border: #2a2a2a;
+    --border-subtle: #1f1f1f;
+    --input: #3a3a3a;
+    --ring: #ff695b;
+
+    --chart-blue: #4d8dff;
+    --chart-green: #22c55e;
+    --chart-red: #ff8080;
+    --chart-gold: #f6b331;
+    --chart-series-users: #ff8a3d;
+    --chart-series-aum: #ff695b;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #0e0e0e;
+  --foreground: #f4f4f5;
+  --surface: #171717;
+  --card: #171717;
+  --card-foreground: #f4f4f5;
+  --popover: #1c1c1c;
+  --popover-foreground: #f4f4f5;
+
+  --primary: #ff695b;
+  --primary-foreground: #ffffff;
+
+  --secondary: #262626;
+  --secondary-foreground: #f4f4f5;
+  --muted: #1f1f1f;
+  --muted-foreground: #a1a1aa;
+  --accent: #262626;
+  --accent-foreground: #f4f4f5;
+  --text-secondary: #d4d4d8;
+
+  --info: #4d8dff;
+  --info-foreground: #0e0e0e;
+  --success: #22c55e;
+  --success-subtle: #14311f;
+  --warning: #f59e0b;
+  --warning-subtle: #3a2a0a;
+  --destructive: #ef4444;
+  --destructive-subtle: #3a1414;
+  --destructive-foreground: #0e0e0e;
+
+  --border: #2a2a2a;
+  --border-subtle: #1f1f1f;
+  --input: #3a3a3a;
+  --ring: #ff695b;
+
+  --chart-blue: #4d8dff;
+  --chart-green: #22c55e;
+  --chart-red: #ff8080;
+  --chart-gold: #f6b331;
+  --chart-series-users: #ff8a3d;
+  --chart-series-aum: #ff695b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand-from: var(--brand-gradient-from);
+  --color-brand-to: var(--brand-gradient-to);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-destructive: var(--destructive);
+  --color-destructive-subtle: var(--destructive-subtle);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-surface-dark: var(--surface-dark);
+  --color-surface-dark-foreground: var(--surface-dark-foreground);
+
+  --color-chart-blue: var(--chart-blue);
+  --color-chart-green: var(--chart-green);
+  --color-chart-red: var(--chart-red);
+  --color-chart-gold: var(--chart-gold);
+  --color-chart-series-users: var(--chart-series-users);
+  --color-chart-series-aum: var(--chart-series-aum);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 2px); /* 8px */
+  --radius-md: var(--radius); /* 10px */
+  --radius-lg: calc(var(--radius) + 5px); /* 15px */
+  --radius-xl: calc(var(--radius) + 10px); /* 20px */
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Sidebar brand gradient — the one place a gradient is allowed as a utility. */
+.bg-sidebar-gradient {
+  background-image: linear-gradient(
+    180deg,
+    var(--brand-gradient-from) 0%,
+    var(--brand-gradient-to) 100%
+  );
+}
