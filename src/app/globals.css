@@ -283,6 +283,15 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+
+  /* Hide scrollbars app-wide — scrolling still works, the bar is just not
+     painted. Replaces per-container `scrollbar-hide`. */
+  * {
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Sidebar brand gradient — the one place a gradient is allowed as a utility. */
@@ -293,10 +302,10 @@
     var(--brand-gradient-from) 100%
   );
 }
-@utility scrollbar-hide {
+/* @utility scrollbar-hide {
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
-}
+} */

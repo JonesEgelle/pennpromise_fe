@@ -11,7 +11,8 @@ export interface Breadcrumb {
 
 interface PageHeaderProps {
   title: string;
-  description?: string;
+  /** Plain string, or rich content when part of the line needs its own style. */
+  description?: React.ReactNode;
   /**
    * Optional — breadcrumbs are hidden on most screens in the design source, so
    * this is an opt-in slot, not baked-in chrome.
