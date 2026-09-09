@@ -108,6 +108,13 @@ export async function mockListTransactions(
   };
 }
 
+export async function mockGetTransaction(id: string): Promise<Transaction> {
+  await delay();
+  const txn = store.find((entry) => entry.id === id);
+  if (!txn) throw new Error("This transaction no longer exists.");
+  return { ...txn, client: { ...txn.client } };
+}
+
 export async function mockCreateTransaction(
   input: TransactionInput,
 ): Promise<Transaction> {

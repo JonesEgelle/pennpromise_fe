@@ -91,9 +91,15 @@ function DataTableInner<Row>({
         <tbody>
           {isLoading ? (
             Array.from({ length: 5 }).map((_, rowIndex) => (
-              <tr key={`skeleton-${rowIndex}`} className="border-b border-border">
+              <tr
+                key={`skeleton-${rowIndex}`}
+                className="border-b border-border"
+              >
                 {Array.from({ length: colCount }).map((__, cellIndex) => (
-                  <td key={`skeleton-${rowIndex}-${cellIndex}`} className="px-4 py-3">
+                  <td
+                    key={`skeleton-${rowIndex}-${cellIndex}`}
+                    className="px-4 py-3"
+                  >
                     <Skeleton className="h-4 w-full" />
                   </td>
                 ))}
@@ -123,7 +129,10 @@ function DataTableInner<Row>({
                   {columns.map((column) => (
                     <td
                       key={`${id}-${column.key}`}
-                      className={cn("px-4 py-3 text-foreground", column.className)}
+                      className={cn(
+                        "px-4 py-3 text-foreground tracking-tight",
+                        column.className,
+                      )}
                     >
                       {column.render
                         ? column.render(row)
@@ -133,7 +142,10 @@ function DataTableInner<Row>({
                     </td>
                   ))}
                   {rowActions?.length ? (
-                    <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                    <td
+                      className="px-4 py-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {rowActionsVariant === "inline" ? (
                         <div className="flex items-center justify-end gap-1">
                           {rowActions.map((action) => {
