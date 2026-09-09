@@ -153,7 +153,7 @@ export function SidebarContent() {
           />
         </div>
 
-        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
+        <nav className="flex flex-1 flex-col gap-1">
           {PRIMARY_NAV.map((item) => (
             <NavLink key={item.href} item={item} active={isActive(item.href)} />
           ))}
@@ -173,7 +173,7 @@ export function SidebarContent() {
 /** Fixed desktop navigation rail. Hidden below `md` — see <MobileNav>. */
 export function Sidebar() {
   return (
-    <aside className="bg-sidebar-gradient hidden w-72 shrink-0 md:block">
+    <aside className="bg-sidebar-gradient sticky top-0 hidden h-screen w-72 shrink-0 overflow-hidden md:block">
       <SidebarContent />
     </aside>
   );

@@ -8,7 +8,7 @@ export function ReconStatsRow({ stats }: { stats: ReconStatTile[] }) {
       {stats.map((tile) => (
         <Card key={tile.id} className="space-y-3 p-5">
           <div className="flex items-start justify-between">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            <p className="text-xs font-medium uppercase tracking-normal text-black">
               {tile.label}
             </p>
             {tile.priority ? (
@@ -19,15 +19,15 @@ export function ReconStatsRow({ stats }: { stats: ReconStatTile[] }) {
               <StatDeltaBadge value={tile.delta} />
             )}
           </div>
-          <p className="text-2xl font-semibold text-foreground">
+          <p className="text-2xl font-bold text-surface-dark">
             {tile.value}{" "}
             <span className="text-xs font-normal text-muted-foreground">
               {tile.sub}
             </span>
           </p>
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-surface-dark"
+              className="h-full rounded-full bg-[#000666]"
               style={{ width: `${tile.progress}%` }}
             />
           </div>

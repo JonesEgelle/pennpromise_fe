@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Download, ListFilter } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { ExportIcon } from "@/components/icons/action-icons";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { AutomatedFlagsList } from "@/modules/financialReconciliation/components/AutomatedFlagsList";
 import { ManualReconTool } from "@/modules/financialReconciliation/components/ManualReconTool";
@@ -24,23 +25,28 @@ export function FinancialReconciliationView() {
   return (
     <div className="space-y-6">
       <PageHeader
+        className="font-bold"
         title="Financial Reconciliation"
         description={
-          data
-            ? `Status: ${data.periodLabel} · ${data.flagsRemaining} Sharia compliance flags remaining`
-            : "Reconcile the internal Halal ledger against settlement records."
+          data ? (
+            <>
+              Status: {data.periodLabel} ·{" "}
+              <span className="text-primary">
+                {data.flagsRemaining} Sharia compliance flags remaining
+              </span>
+            </>
+          ) : (
+            "Reconcile the internal Halal ledger against settlement records."
+          )
         }
         actions={
           <>
-            <Button variant="outline" size="sm">
+            <Button variant="outline">
               <ListFilter className="size-4" />
               Filter
             </Button>
-            <Button
-              size="sm"
-              onClick={() => toast.success("Report queued.")}
-            >
-              <Download className="size-4" />
+            <Button onClick={() => toast.success("Report queued.")}>
+              <ExportIcon className="size-4" />
               Export Sharia Audit Report
             </Button>
           </>

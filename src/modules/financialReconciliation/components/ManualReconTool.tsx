@@ -33,16 +33,16 @@ function LedgerTable({
 }) {
   return (
     <div className="min-w-0 flex-1">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <p className=" bg-[#F8FAFC] p-3 mb-2 text-[14px] font-bold uppercase tracking-wide text-[#03053E]">
         {title}
       </p>
-      <div className="overflow-hidden rounded-lg border border-border">
-        <table className="w-full text-xs">
+      <div className="overflow-hidden ">
+        <table className="w-full text-[13px]">
           <thead>
-            <tr className="border-b border-border bg-muted/40 text-left text-muted-foreground">
-              <th className="px-3 py-2 font-medium">Date</th>
-              <th className="px-3 py-2 font-medium">ID</th>
-              <th className="px-3 py-2 text-right font-medium">Amount</th>
+            <tr className=" text-left text-muted-foreground">
+              <th className="p-3.75 font-medium">Date</th>
+              <th className="p-3.75 font-medium">ID</th>
+              <th className="p-3.75 text-right font-medium">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -54,11 +54,11 @@ function LedgerTable({
                   row.mismatch && "bg-destructive-subtle/50",
                 )}
               >
-                <td className="px-3 py-2 text-text-secondary">{row.date}</td>
-                <td className="px-3 py-2 text-text-secondary">{row.id}</td>
+                <td className="p-3.75 text-text-secondary">{row.date}</td>
+                <td className="p-3.75 text-text-secondary">{row.id}</td>
                 <td
                   className={cn(
-                    "px-3 py-2 text-right font-medium",
+                    "p-3.75 text-right font-medium",
                     row.mismatch ? "text-destructive" : "text-foreground",
                   )}
                 >
@@ -73,6 +73,15 @@ function LedgerTable({
   );
 }
 
+// TODO(api-contract): row-status filter for the ledger comparison — options and
+// wiring are presentational until the reconciliation status enum is confirmed.
+const STATUS_OPTIONS = [
+  { value: "all", label: "All Status" },
+  { value: "matched", label: "Matched" },
+  { value: "mismatched", label: "Mismatched" },
+  { value: "unresolved", label: "Unresolved" },
+] as const;
+
 interface ManualReconToolProps {
   flagId: string | null;
 }
@@ -80,14 +89,15 @@ interface ManualReconToolProps {
 export function ManualReconTool({ flagId }: ManualReconToolProps) {
   const [autoMatch, setAutoMatch] = React.useState(true);
   const [reason, setReason] = React.useState<ReconResolutionReason | "">("");
+  const [status, setStatus] = React.useState<string>("all");
   const resolve = useResolveFlag();
   const skip = useSkipFlag();
 
   const { data, isLoading } = useReconLedger(flagId);
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-border bg-card">
-      <div className="flex flex-col gap-2 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
+    <div className="flex h-full flex-col overflow-hidden  bg-card">
+      <div className="flex flex-col gap-2 bg-surface-muted p-5 sm:flex-row sm:items-start sm:justify-between rounded-t-[15px]">
         <div>
           <h3 className="text-base font-semibold text-foreground">
             Manual Reconciliation Tool
@@ -102,7 +112,7 @@ export function ManualReconTool({ flagId }: ManualReconToolProps) {
         </label>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-5">
+      <div className="flex-1 overflow-y-auto ">
         {!flagId ? (
           <p className="grid h-full place-items-center text-sm text-muted-foreground">
             Select a flag to reconcile.
@@ -119,20 +129,30 @@ export function ManualReconTool({ flagId }: ManualReconToolProps) {
           </div>
         )}
       </div>
-
-      <div className="flex flex-col gap-3 border-t border-border p-5 sm:flex-row sm:items-center">
+      {/* Actions Section */}
+      <div className="flex flex-col gap-3 mt-2 p-5 sm:flex-row sm:items-center">
         <span className="text-sm text-text-secondary">Resolve as:</span>
         <Select
           value={reason}
-          onValueChange={(value) =>
-            setReason(value as ReconResolutionReason)
-          }
+          onValueChange={(value) => setReason(value as ReconResolutionReason)}
         >
-          <SelectTrigger className="w-full sm:w-56">
+          <SelectTrigger className="w-full sm:w-40 shadow-none">
             <SelectValue placeholder="Select a reason" />
           </SelectTrigger>
           <SelectContent>
             {RECON_REASON_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={status} onValueChange={setStatus}>
+          <SelectTrigger className="w-full sm:w-40 shadow-none">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {STATUS_OPTIONS.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -153,9 +173,7 @@ export function ManualReconTool({ flagId }: ManualReconToolProps) {
             isLoading={resolve.isPending}
             disabled={!flagId || !reason}
             onClick={() =>
-              flagId &&
-              reason &&
-              resolve.mutate({ flagId, reason })
+              flagId && reason && resolve.mutate({ flagId, reason })
             }
           >
             Approve Match
