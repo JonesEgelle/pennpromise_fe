@@ -29,18 +29,15 @@ interface TablePaginationProps {
  * Build a compact page list with ellipses, e.g. `[1, "…", 4, 5, 6, "…", 24]`.
  * Always shows the first and last page plus a window around the current one.
  */
-function buildPageList(current: number, total: number): (number | "ellipsis")[] {
+function buildPageList(
+  current: number,
+  total: number,
+): (number | "ellipsis")[] {
   if (total <= 7) {
     return Array.from({ length: total }, (_, index) => index + 1);
   }
 
-  const pages = new Set<number>([
-    1,
-    total,
-    current,
-    current - 1,
-    current + 1,
-  ]);
+  const pages = new Set<number>([1, total, current, current - 1, current + 1]);
   const ordered = [...pages]
     .filter((page) => page >= 1 && page <= total)
     .sort((a, b) => a - b);
@@ -72,33 +69,6 @@ export function TablePagination({
 
   return (
     <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-4">
-        <p className="text-sm text-muted-foreground">
-          {count === 0 ? "No results" : `Showing ${from}–${to} of ${count}`}
-        </p>
-        {onPageSizeChange ? (
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Rows</span>
-            <Select
-              value={String(page_size)}
-              onValueChange={(value) => onPageSizeChange(Number(value))}
-              disabled={isLoading}
-            >
-              <SelectTrigger className="h-8 w-[4.5rem]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {pageSizeOptions.map((option) => (
-                  <SelectItem key={option} value={String(option)}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        ) : null}
-      </div>
-
       <div className="flex items-center gap-1">
         <Button
           variant="outline"
@@ -106,8 +76,10 @@ export function TablePagination({
           disabled={isLoading || page <= 1}
           onClick={() => onPageChange(page - 1)}
           aria-label="Previous page"
+          className="text-[#000000] font-normal text-[14px]"
         >
-          <ChevronLeft className="size-4" />
+          {/* <ChevronLeft className="size-4" /> */}
+          Prev
         </Button>
 
         {pageList.map((entry, index) =>
@@ -140,9 +112,37 @@ export function TablePagination({
           disabled={isLoading || page >= totalPages}
           onClick={() => onPageChange(page + 1)}
           aria-label="Next page"
+          className="text-[#000000] font-normal text-[14px]"
         >
-          <ChevronRight className="size-4" />
+          {/* <ChevronRight className="size-4" /> */}
+          Next
         </Button>
+      </div>
+      <div className="flex items-center gap-4">
+        <p className="text-sm text-muted-foreground">
+          {count === 0 ? "No results" : `Showing ${from}–${to} of ${count}`}
+        </p>
+        {onPageSizeChange ? (
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Rows</span>
+            <Select
+              value={String(page_size)}
+              onValueChange={(value) => onPageSizeChange(Number(value))}
+              disabled={isLoading}
+            >
+              <SelectTrigger className="h-8 w-[4.5rem]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {pageSizeOptions.map((option) => (
+                  <SelectItem key={option} value={String(option)}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        ) : null}
       </div>
     </div>
   );

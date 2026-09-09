@@ -57,6 +57,7 @@
   /* Semantic */
   --info: #0047ab; /* links / info */
   --info-foreground: #ffffff;
+  --info-subtle: #eff2fc;
   --success: #16a34a;
   --success-subtle: #dcfce7;
   --warning: #b45309;
@@ -71,6 +72,9 @@
   --input: #d7d7d7; /* form field border */
   --ring: #ff695b;
   --logo-border: #e9e9e9;
+
+  /* Tinted panel header / muted surface (KYC review-pane header, etc.). */
+  --surface-muted: #f2f3fb;
 
   /* Always-dark navy surface (stat callouts that stay dark in both themes,
      like the coral promo panels stay coral). */
@@ -127,6 +131,7 @@
 
     --info: #4d8dff;
     --info-foreground: #0e0e0e;
+    --info-subtle: #132033;
     --success: #22c55e;
     --success-subtle: #14311f;
     --warning: #f59e0b;
@@ -139,6 +144,8 @@
     --border-subtle: #1f1f1f;
     --input: #3a3a3a;
     --ring: #ff695b;
+
+    --surface-muted: #1c1c1c;
 
     --chart-blue: #4d8dff;
     --chart-green: #22c55e;
@@ -173,6 +180,7 @@
 
   --info: #4d8dff;
   --info-foreground: #0e0e0e;
+  --info-subtle: #132033;
   --success: #22c55e;
   --success-subtle: #14311f;
   --warning: #f59e0b;
@@ -185,6 +193,8 @@
   --border-subtle: #1f1f1f;
   --input: #3a3a3a;
   --ring: #ff695b;
+
+  --surface-muted: #1c1c1c;
 
   --chart-blue: #4d8dff;
   --chart-green: #22c55e;
@@ -218,6 +228,7 @@
 
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-info-subtle: var(--info-subtle);
   --color-success: var(--success);
   --color-success-subtle: var(--success-subtle);
   --color-warning: var(--warning);
@@ -231,6 +242,7 @@
   --color-logo-border: var(--logo-border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-surface-muted: var(--surface-muted);
   --color-surface-dark: var(--surface-dark);
   --color-surface-dark-foreground: var(--surface-dark-foreground);
 
@@ -260,15 +272,17 @@
     Roboto, Helvetica, Arial, sans-serif;
 }
 
-* {
-  border-color: var(--border);
-}
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
 }
 
 /* Sidebar brand gradient — the one place a gradient is allowed as a utility. */
@@ -278,4 +292,11 @@ body {
     var(--brand-gradient-to) 0%,
     var(--brand-gradient-from) 100%
   );
+}
+@utility scrollbar-hide {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
