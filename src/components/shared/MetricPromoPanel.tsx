@@ -14,6 +14,8 @@ interface MetricPromoPanelProps {
   stats?: PromoStat[];
   /** Optional action row (buttons). */
   actions?: React.ReactNode;
+  /** Decorative glyph pinned to the bottom-right, rendered low-opacity behind content. */
+  watermark?: React.ReactNode;
   className?: string;
 }
 
@@ -27,12 +29,13 @@ export function MetricPromoPanel({
   body,
   stats,
   actions,
+  watermark,
   className,
 }: MetricPromoPanelProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl bg-primary p-6 text-primary-foreground",
+        "relative overflow-hidden rounded-xl bg-[#FF4D4D] p-6 text-primary-foreground",
         className,
       )}
     >
@@ -40,10 +43,18 @@ export function MetricPromoPanel({
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/12 to-transparent"
         aria-hidden
       />
+      {watermark ? (
+        <div
+          className="pointer-events-none absolute bottom-0 right-0 text-white/10"
+          aria-hidden
+        >
+          {watermark}
+        </div>
+      ) : null}
       <div className="relative space-y-4">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">{title}</h3>
-          <p className="max-w-2xl text-sm text-primary-foreground/85">{body}</p>
+          <p className="max-w-130 text-sm text-primary-foreground/85">{body}</p>
         </div>
 
         {stats && stats.length > 0 ? (

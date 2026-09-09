@@ -7,6 +7,101 @@ import type { SVGProps } from "react";
  */
 type IconProps = SVGProps<SVGSVGElement>;
 
+/** Mosque silhouette — decorative watermark for the audit promo panel. */
+export function MosqueIcon(props: IconProps) {
+  return (
+    <svg
+      width="260"
+      height="210"
+      viewBox="0 0 260 210"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M86.875 88.125C82.5 88.125 79.4271 87.2396 77.6562 85.4688C75.8854 83.6979 75 80.625 75 76.25C75 67.9167 76.9792 60.2083 80.9375 53.125C84.8958 46.0417 90.2083 40.2083 96.875 35.625L150 0L203.125 35.625C209.792 40.2083 215.104 46.0417 219.062 53.125C223.021 60.2083 225 67.9167 225 76.25C225 80.625 224.115 83.6979 222.344 85.4688C220.573 87.2396 217.5 88.125 213.125 88.125H86.875ZM12.5 250V96.5625C8.75 94.2708 5.72917 91.3021 3.4375 87.6562C1.14583 84.0104 0 79.7917 0 75C0 70.2083 2.5 64.375 7.5 57.5C12.5 50.625 18.3333 43.9583 25 37.5C31.6667 43.9583 37.5 50.625 42.5 57.5C47.5 64.375 50 70.2083 50 75C50 79.7917 48.8542 84.0104 46.5625 87.6562C44.2708 91.3021 41.25 94.2708 37.5 96.5625V150H62.5V125C62.5 119.792 64.1667 114.792 67.5 110C70.8333 105.208 75.625 102.083 81.875 100.625H218.125C224.375 102.083 229.167 105.208 232.5 110C235.833 114.792 237.5 119.792 237.5 125V150H262.5V96.5625C258.75 94.2708 255.729 91.3021 253.438 87.6562C251.146 84.0104 250 79.7917 250 75C250 70.2083 252.5 64.375 257.5 57.5C262.5 50.625 268.333 43.9583 275 37.5C281.667 43.9583 287.5 50.625 292.5 57.5C297.5 64.375 300 70.2083 300 75C300 79.7917 298.854 84.0104 296.562 87.6562C294.271 91.3021 291.25 94.2708 287.5 96.5625V250H175V200C175 193.125 172.552 187.24 167.656 182.344C162.76 177.448 156.875 175 150 175C143.125 175 137.24 177.448 132.344 182.344C127.448 187.24 125 193.125 125 200V250H12.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Document with ruled lines — Sharia Governance filing rows. */
+export function FileLinesIcon(props: IconProps) {
+  return (
+    <svg
+      width="16"
+      height="20"
+      viewBox="0 0 16 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M4 16H12V14H4V16ZM4 12H12V10H4V12ZM2 20C1.45 20 0.979167 19.8042 0.5875 19.4125C0.195833 19.0208 0 18.55 0 18V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H10L16 6V18C16 18.55 15.8042 19.0208 15.4125 19.4125C15.0208 19.8042 14.55 20 14 20H2ZM9 7V2H2V18H14V7H9ZM2 2V7V2V7V18V2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Filled warning triangle — "Ethical Compliance Alerts" panel heading. */
+export function AlertTriangleFillIcon(props: IconProps) {
+  return (
+    <svg
+      width="22"
+      height="19"
+      viewBox="0 0 22 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M0 19L11 0L22 19H0ZM11 16C11.2833 16 11.5208 15.9042 11.7125 15.7125C11.9042 15.5208 12 15.2833 12 15C12 14.7167 11.9042 14.4792 11.7125 14.2875C11.5208 14.0958 11.2833 14 11 14C10.7167 14 10.4792 14.0958 10.2875 14.2875C10.0958 14.4792 10 14.7167 10 15C10 15.2833 10.0958 15.5208 10.2875 15.7125C10.4792 15.9042 10.7167 16 11 16ZM10 13H12V8H10V13Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Vertical exclamation mark — prohibited / blocked alert. */
+export function AlertBangIcon(props: IconProps) {
+  return (
+    <svg
+      width="4"
+      height="18"
+      viewBox="0 0 4 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M2 18C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16C0 15.45 0.195833 14.9792 0.5875 14.5875C0.979167 14.1958 1.45 14 2 14C2.55 14 3.02083 14.1958 3.4125 14.5875C3.80417 14.9792 4 15.45 4 16C4 16.55 3.80417 17.0208 3.4125 17.4125C3.02083 17.8042 2.55 18 2 18ZM0 12V0H4V12H0Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Swap arrows over ledger lines — portfolio rebalancing alert. */
+export function RebalanceIcon(props: IconProps) {
+  return (
+    <svg
+      width="20"
+      height="17"
+      viewBox="0 0 20 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M12.4 16.075L11 14.675L13.6 12.075L11 9.475L12.4 8.075L15 10.675L17.6 8.075L19 9.475L16.4 12.075L19 14.675L17.6 16.075L15 13.475L12.4 16.075ZM14.375 7.075L10.825 3.525L12.225 2.125L14.35 4.25L18.6 0L20 1.425L14.375 7.075ZM0 13.075V11.075H9V13.075H0ZM0 5.075V3.075H9V5.075H0Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 /** Slim check mark — Sharia checklist tick boxes. Stroke is `currentColor`. */
 export function CheckIcon(props: IconProps) {
   return (
@@ -24,6 +119,44 @@ export function CheckIcon(props: IconProps) {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Card / wallet with chip — compliance status cards (equity, sukuk, audit). */
+export function WalletChipIcon(props: IconProps) {
+  return (
+    <svg
+      width="19"
+      height="18"
+      viewBox="0 0 19 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M2 16V2C2 2 2 2.37083 2 3.1125C2 3.85417 2 4.81667 2 6V12C2 13.1833 2 14.1458 2 14.8875C2 15.6292 2 16 2 16ZM2 18C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H16C16.55 0 17.0208 0.195833 17.4125 0.5875C17.8042 0.979167 18 1.45 18 2V4.5H16V2H2V16H16V13.5H18V16C18 16.55 17.8042 17.0208 17.4125 17.4125C17.0208 17.8042 16.55 18 16 18H2ZM10 14C9.45 14 8.97917 13.8042 8.5875 13.4125C8.19583 13.0208 8 12.55 8 12V6C8 5.45 8.19583 4.97917 8.5875 4.5875C8.97917 4.19583 9.45 4 10 4H17C17.55 4 18.0208 4.19583 18.4125 4.5875C18.8042 4.97917 19 5.45 19 6V12C19 12.55 18.8042 13.0208 18.4125 13.4125C18.0208 13.8042 17.55 14 17 14H10ZM17 12V6H10V12H17ZM13 10.5C13.4167 10.5 13.7708 10.3542 14.0625 10.0625C14.3542 9.77083 14.5 9.41667 14.5 9C14.5 8.58333 14.3542 8.22917 14.0625 7.9375C13.7708 7.64583 13.4167 7.5 13 7.5C12.5833 7.5 12.2292 7.64583 11.9375 7.9375C11.6458 8.22917 11.5 8.58333 11.5 9C11.5 9.41667 11.6458 9.77083 11.9375 10.0625C12.2292 10.3542 12.5833 10.5 13 10.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Auction gavel — Sharia Board filings / rulings. */
+export function GavelIcon(props: IconProps) {
+  return (
+    <svg
+      width="18"
+      height="19"
+      viewBox="0 0 18 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M0 19V17H12V19H0ZM5.65 14.15L0 8.5L2.1 6.35L7.8 12L5.65 14.15ZM12 7.8L6.35 2.1L8.5 0L14.15 5.65L12 7.8ZM16.6 18L3.55 4.95L4.95 3.55L18 16.6L16.6 18Z"
+        fill="currentColor"
       />
     </svg>
   );
