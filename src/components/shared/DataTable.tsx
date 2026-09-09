@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MoreVertical, type LucideIcon } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -26,8 +26,12 @@ export interface RowAction<Row> {
   /** Per-row disable — used for self-action guards and permission gating. */
   disabled?: (row: Row) => boolean;
   variant?: "default" | "destructive";
-  /** Required when `rowActionsVariant="inline"`; ignored by the menu variant. */
-  icon?: LucideIcon;
+  /**
+   * Required when `rowActionsVariant="inline"`; ignored by the menu variant.
+   * Any icon component that accepts `className` — a `lucide-react` icon or a
+   * project SVG icon from `@/components/icons/*`.
+   */
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 interface DataTableProps<Row> {

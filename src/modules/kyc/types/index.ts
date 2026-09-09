@@ -19,6 +19,8 @@ export interface KycCase {
   status: KycStatus;
   /** ISO — drives the queue timer. */
   enqueuedAt: string;
+  /** Short document tags shown as overlapping circles on the queue card. */
+  documentBadges: string[];
 }
 
 export type KycDocumentKind = "nin" | "poa" | "bank" | "other";

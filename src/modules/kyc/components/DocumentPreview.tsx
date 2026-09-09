@@ -17,17 +17,17 @@ export function DocumentPreview({ documents }: { documents: KycDocument[] }) {
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
         {documents.map((doc) => (
           <button
             key={doc.id}
             type="button"
             onClick={() => setActiveId(doc.id)}
             className={cn(
-              "max-w-[12rem] truncate rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+              "max-w-[12rem] shrink-0 truncate rounded-[10px] border px-4 py-2 text-sm font-medium transition-colors",
               doc.id === active?.id
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border text-text-secondary hover:bg-muted/50",
+                ? "border-transparent bg-primary text-primary-foreground"
+                : "border-border bg-surface text-text-secondary hover:bg-muted/50",
             )}
           >
             {doc.label}
@@ -35,7 +35,7 @@ export function DocumentPreview({ documents }: { documents: KycDocument[] }) {
         ))}
       </div>
 
-      <div className="grid aspect-[4/3] w-full place-items-center rounded-xl border border-border bg-muted/40 text-muted-foreground">
+      <div className="grid aspect-[4/4] w-full place-items-center rounded-[15px] border border-border bg-muted/40 text-muted-foreground">
         {active ? (
           <div className="flex flex-col items-center gap-2 text-center">
             <FileText className="size-8" aria-hidden />
