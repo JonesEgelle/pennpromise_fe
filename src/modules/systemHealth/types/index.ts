@@ -9,6 +9,8 @@ export interface NodeMetric {
   value: string;
   delta: number;
   bars: number[];
+  /** Drives the value colour and the sparkline colour. */
+  tone: "blue" | "gold";
 }
 
 export type HubCellStatus = "ok" | "warn" | "error";

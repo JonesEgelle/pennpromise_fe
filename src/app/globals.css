@@ -85,7 +85,8 @@
   --chart-blue: #2e5bff;
   --chart-green: #16a34a;
   --chart-red: #ff6b6b;
-  --chart-gold: #ffd700;
+  --chart-gold: #f6b331;
+  --chart-yellow: #ffd700;
   --chart-series-users: #03053e;
   --chart-series-aum: #2e5bff;
 
@@ -151,6 +152,7 @@
     --chart-green: #22c55e;
     --chart-red: #ff8080;
     --chart-gold: #f6b331;
+    --chart-yellow: #ffd700;
     --chart-series-users: #ff8a3d;
     --chart-series-aum: #ff695b;
   }
@@ -200,6 +202,7 @@
   --chart-green: #22c55e;
   --chart-red: #ff8080;
   --chart-gold: #f6b331;
+  --chart-yellow: #ffd700;
   --chart-series-users: #ff8a3d;
   --chart-series-aum: #ff695b;
 }
@@ -250,6 +253,7 @@
   --color-chart-green: var(--chart-green);
   --color-chart-red: var(--chart-red);
   --color-chart-gold: var(--chart-gold);
+  --color-chart-yellow: var(--chart-yellow);
   --color-chart-series-users: var(--chart-series-users);
   --color-chart-series-aum: var(--chart-series-aum);
 
