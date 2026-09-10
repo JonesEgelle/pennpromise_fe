@@ -1,14 +1,19 @@
-import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 
 import { Card } from "@/components/ui/card";
 import { StatDeltaBadge } from "@/components/shared/StatDeltaBadge";
-import { ACCENT_FILL_CLASS, type AccentTone } from "@/components/shared/visual";
+import {
+  ACCENT_CHIP_CLASS,
+  ACCENT_FILL_CLASS,
+  type AccentTone,
+} from "@/components/shared/visual";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   label: string;
   value: string;
-  icon: LucideIcon;
+  /** Any icon component that accepts `className` — lucide or a project SVG. */
+  icon: ComponentType<{ className?: string }>;
   delta?: number | null;
   /** Optional mini-bar under the value (0–100). */
   accent?: { percent: number; tone: AccentTone };
@@ -25,9 +30,16 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <Card className={cn("flex flex-col gap-4 p-5", className)}>
+    <Card className={cn("flex flex-col rounded-[15px] gap-4 p-5", className)}>
       <div className="flex items-start justify-between">
-        <span className="grid size-10 place-items-center rounded-lg bg-muted text-muted-foreground">
+        <span
+          className={cn(
+            "grid size-10 place-items-center rounded-[8px]",
+            accent
+              ? ACCENT_CHIP_CLASS[accent.tone]
+              : "bg-muted text-muted-foreground",
+          )}
+        >
           <Icon className="size-5" aria-hidden />
         </span>
         <StatDeltaBadge value={delta} />

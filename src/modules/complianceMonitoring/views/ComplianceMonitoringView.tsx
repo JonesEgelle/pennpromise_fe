@@ -413,7 +413,7 @@ export function ComplianceMonitoringView() {
             <AlertsByType data={data} />
 
             <MetricPromoPanel
-              className="h-full"
+              className="h-full rounded-[8px]"
               title="Ready for Sharia Audit?"
               body={data.auditReadiness.narrative}
               watermark={<MosqueIcon className="h-52.5 w-auto" />}

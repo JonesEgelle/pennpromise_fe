@@ -7,14 +7,15 @@
  * module is presentational-only for v1.
  */
 import {
-  BadgeCheck,
-  Clock,
-  ShieldCheck,
-  TrendingUp,
-  UserRound,
-  Wallet,
-} from "lucide-react";
-
+  BanknoteIcon,
+  IdCardIcon,
+  ShieldComplianceIcon,
+  SukukLimitsIcon,
+  TrendUpIcon,
+  UnlockIcon,
+  UsersIcon,
+  WalletIcon,
+} from "@/components/icons/status-icons";
 import { APP_ROUTES } from "@/constants/routes";
 import type { PlatformAnalyticsData } from "@/modules/platformAnalytics/types";
 
@@ -23,15 +24,15 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
     {
       id: "total-users",
       label: "Total Users",
-      icon: UserRound,
+      icon: UsersIcon,
       value: "124,592",
       delta: 12.4,
-      accent: { percent: 62, tone: "blue" },
+      accent: { percent: 62, tone: "navy" },
     },
     {
       id: "halal-aum",
       label: "Halal AUM (NGN)",
-      icon: Wallet,
+      icon: WalletIcon,
       value: "₦842.4B",
       delta: 12.4,
       accent: { percent: 34, tone: "blue" },
@@ -39,7 +40,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
     {
       id: "sukuk-volume",
       label: "Sukuk Volume",
-      icon: TrendingUp,
+      icon: BanknoteIcon,
       value: "₦1.8B",
       delta: -12.4,
       accent: { percent: 78, tone: "red" },
@@ -47,7 +48,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
     {
       id: "avg-session",
       label: "Avg Session",
-      icon: Clock,
+      icon: TrendUpIcon,
       value: "18m 45s",
       delta: 12.4,
       accent: { percent: 21, tone: "gold" },
@@ -62,7 +63,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
   ],
   investmentMix: {
     slices: [
-      { label: "Sukuk Bonds (FGN/Corporate)", percent: 54, tone: "neutral" },
+      { label: "Sukuk Bonds (FGN/Corporate)", percent: 54, tone: "navy" },
       { label: "Halal Equity Funds", percent: 22, tone: "blue" },
       { label: "Ijarah (Leasing) Assets", percent: 16, tone: "red" },
       { label: "Murabaha Trades", percent: 8, tone: "gold" },
@@ -157,28 +158,28 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
       label: "Verify BVN/NIN",
       sublabel: "42 pending applications",
       href: APP_ROUTES.KYC,
-      icon: BadgeCheck,
+      icon: IdCardIcon,
     },
     {
       id: "unblock-account",
       label: "Unblock Account",
       sublabel: "Manual security override",
       href: APP_ROUTES.USERS,
-      icon: ShieldCheck,
+      icon: UnlockIcon,
     },
     {
       id: "sukuk-limits",
       label: "Sukuk Limits",
       sublabel: "Adjust NIF thresholds",
       href: APP_ROUTES.FINANCIAL_RECONCILIATION,
-      icon: TrendingUp,
+      icon: SukukLimitsIcon,
     },
     {
       id: "sharia-compliance",
       label: "Sharia Compliance",
       sublabel: "Zakat & Riba drill-down",
       href: APP_ROUTES.COMPLIANCE_MONITORING,
-      icon: ShieldCheck,
+      icon: ShieldComplianceIcon,
     },
   ],
   network: {
@@ -186,7 +187,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
     uptimePct: 99.98,
     gauges: [
       { label: "Resource Utilization", percent: 58, tone: "red" },
-      { label: "Sukuk Switch Response", percent: 92, tone: "blue" },
+      { label: "Sukuk Switch Response", percent: 92, tone: "navy" },
     ],
   },
 };

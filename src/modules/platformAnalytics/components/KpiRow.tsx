@@ -12,6 +12,7 @@ export function KpiRow({ kpis }: { kpis: AnalyticsKpi[] }) {
           icon={kpi.icon}
           delta={kpi.delta}
           accent={kpi.accent}
+          className="shadow-none"
         />
       ))}
     </div>
