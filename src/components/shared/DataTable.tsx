@@ -34,13 +34,14 @@ export interface RowAction<Row> {
   icon?: React.ComponentType<{ className?: string }>;
 }
 
-interface DataTableProps<Row> {
+interface DataTableProps<Row> extends React.ComponentProps<"div"> {
   columns: Column<Row>[];
   data: Row[] | undefined;
   getRowId: (row: Row) => string;
   isLoading?: boolean;
   emptyMessage?: string;
   rowActions?: RowAction<Row>[];
+
   /**
    * `"menu"` (default) renders the `⋮` dropdown. `"inline"` renders each action
    * as an icon button in the cell — the Figma list-page pattern (edit / delete).
@@ -64,11 +65,15 @@ function DataTableInner<Row>({
   rowActions,
   rowActionsVariant = "menu",
   onRowClick,
+  ...props
 }: DataTableProps<Row>) {
   const colCount = columns.length + (rowActions?.length ? 1 : 0);
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-surface">
+    <div
+      className="overflow-x-auto rounded-lg border border-border bg-surface"
+      {...props}
+    >
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/50 text-left">

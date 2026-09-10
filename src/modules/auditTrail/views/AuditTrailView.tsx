@@ -1,14 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { AlertTriangle, Download, FileText } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ExportIcon } from "@/components/icons/action-icons";
+import {
+  AlertTriangleOutlineIcon,
+  ShieldHalfIcon,
+  TrendUpIcon,
+} from "@/components/icons/status-icons";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { SectionCard } from "@/components/shared/SectionCard";
-import { cn } from "@/lib/utils";
 import { ActivityLogTable } from "@/modules/auditTrail/components/ActivityLogTable";
 import {
   AuditFilters,
@@ -22,12 +26,24 @@ import type { AuditListParams } from "@/modules/auditTrail/types";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+/** Navy monitoring-load density ramp (#000666 at 10/20/40/60/80/100% alpha). */
+const LOAD_DENSITY = [
+  "#0006661A",
+  "#00066633",
+  "#00066666",
+  "#00066699",
+  "#000666CC",
+  "#000666",
+];
+
+const NAVY = "#000666";
+
 function CoverageDonut({ pct }: { pct: number }) {
   const radius = 42;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - pct / 100);
   return (
-    <svg viewBox="0 0 100 100" className="size-28">
+    <svg viewBox="0 0 100 100" className="size-32">
       <circle
         cx="50"
         cy="50"
@@ -41,7 +57,7 @@ function CoverageDonut({ pct }: { pct: number }) {
         cy="50"
         r={radius}
         fill="none"
-        stroke="var(--info)"
+        stroke={NAVY}
         strokeWidth="8"
         strokeLinecap="round"
         strokeDasharray={circumference}
@@ -50,9 +66,10 @@ function CoverageDonut({ pct }: { pct: number }) {
       />
       <text
         x="50"
-        y="55"
+        y="56"
         textAnchor="middle"
-        className="fill-foreground text-[20px] font-semibold"
+        fill={NAVY}
+        className="text-[22px] font-bold"
       >
         {pct}%
       </text>
@@ -92,14 +109,11 @@ export function AuditTrailView() {
               size="sm"
               onClick={() => toast.success("Export started.")}
             >
-              <Download className="size-4" />
+              <ExportIcon className="size-4" />
               Export Log
             </Button>
-            <Button
-              size="sm"
-              onClick={() => toast.success("Report queued.")}
-            >
-              <FileText className="size-4" />
+            <Button size="sm" onClick={() => toast.success("Report queued.")}>
+              <TrendUpIcon className="size-4" />
               Sharia Compliance Report
             </Button>
           </>
@@ -114,30 +128,31 @@ export function AuditTrailView() {
           }}
         />
         <div className="space-y-4">
-          <Card className="bg-surface-dark p-5 text-surface-dark-foreground">
-            <div className="flex items-center justify-between">
-              <span className="text-xs uppercase tracking-wide text-surface-dark-foreground/60">
+          <Card className="rounded-[15px] border-none bg-[#000666] p-5 text-surface-dark-foreground shadow-none">
+            <div className="flex items-start justify-between">
+              <ShieldHalfIcon className="size-5 text-white" aria-hidden />
+              <span className="rounded-[6px] bg-white/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
                 Last 24h
               </span>
             </div>
-            <p className="mt-2 text-2xl font-semibold">
+            <p className="mt-4 text-3xl font-bold">
               {(stats?.logsTracked ?? 0).toLocaleString("en-NG")}
             </p>
             <p className="text-xs text-surface-dark-foreground/70">
               Compliance Logs Tracked
             </p>
           </Card>
-          <Card className="p-5">
-            <div className="flex items-center justify-between">
-              <AlertTriangle
-                className="size-4 text-destructive"
+          <Card className="rounded-[15px] p-5 shadow-none">
+            <div className="flex items-start justify-between">
+              <AlertTriangleOutlineIcon
+                className="size-5 text-red-500"
                 aria-hidden
               />
-              <span className="rounded-full bg-destructive-subtle px-2 py-0.5 text-[10px] font-semibold uppercase text-destructive">
+              <span className="rounded-[6px] bg-red-500/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-red-500">
                 Risk Flags
               </span>
             </div>
-            <p className="mt-2 text-2xl font-semibold text-foreground">
+            <p className="mt-4 text-3xl font-bold text-foreground">
               {String(stats?.nonComplianceAlerts ?? 0).padStart(2, "0")}
             </p>
             <p className="text-xs text-muted-foreground">
@@ -147,36 +162,43 @@ export function AuditTrailView() {
         </div>
       </div>
 
-      <section className="space-y-3">
-        <div className="flex items-center justify-between">
+      <section className="space-y-3 rounded-[8px] border border-border ">
+        <div className="flex items-center justify-between p-3">
           <h2 className="text-base font-semibold tracking-tight text-foreground">
             Activity Logs
           </h2>
           <span className="flex items-center gap-1.5 text-xs text-success">
-            <span className="size-2 rounded-full bg-success" aria-hidden />
+            <span
+              className="size-2 rounded-full bg-success animate-pulse"
+              aria-hidden
+            />
             Live Monitoring Active
           </span>
         </div>
 
-        <ActivityLogTable data={data?.results} isLoading={isFetching && !data} />
+        <ActivityLogTable
+          data={data?.results}
+          isLoading={isFetching && !data}
+        />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-3">
           <p className="text-sm text-muted-foreground">
             Showing {data?.results.length ?? 0} of {pagination?.count ?? 0}{" "}
             events
           </p>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <Button
               variant="outline"
-              size="sm"
               disabled={isFetching || (pagination?.page ?? 1) <= 1}
               onClick={() => setPage((current) => current - 1)}
             >
               Previous
             </Button>
+            <span className="px-2 text-sm text-muted-foreground">
+              Page {pagination?.page ?? 1} of {pagination?.total_pages ?? 1}
+            </span>
             <Button
               variant="outline"
-              size="sm"
               disabled={
                 isFetching ||
                 (pagination?.page ?? 1) >= (pagination?.total_pages ?? 1)
@@ -190,10 +212,13 @@ export function AuditTrailView() {
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <SectionCard title="Sharia Coverage">
-          <div className="flex flex-col items-center gap-3 text-center">
+        <SectionCard
+          className="rounded-[15px] shadow-none"
+          title="Sharia Coverage"
+        >
+          <div className="flex flex-col items-center gap-4 py-2 text-center">
             <CoverageDonut pct={stats?.shariaCoveragePct ?? 0} />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-sm text-text-secondary">
               Audit log integrity confirmed for Sharia standards.{" "}
               {100 - (stats?.shariaCoveragePct ?? 0)}% pending Advisory Board
               validation.
@@ -201,24 +226,41 @@ export function AuditTrailView() {
           </div>
         </SectionCard>
 
-        <SectionCard title="Compliance Monitoring Load">
-          <div className="space-y-2">
+        <SectionCard
+          className="rounded-[15px] shadow-none"
+          title="Compliance Monitoring Load"
+          action={
+            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              {[0, 2, 4, 5].map((level) => (
+                <span
+                  key={level}
+                  className="size-2.5 rounded-sm"
+                  style={{ backgroundColor: LOAD_DENSITY[level] }}
+                />
+              ))}
+              Density
+            </div>
+          }
+        >
+          <div className="space-y-3">
             {(stats?.monitoringLoad ?? []).map((row, rowIndex) => (
-              <div key={rowIndex} className="grid grid-cols-7 gap-2">
+              <div key={rowIndex} className="grid grid-cols-7 gap-3">
                 {row.map((value, colIndex) => (
                   <div
                     key={colIndex}
-                    className={cn("h-9 rounded-md")}
+                    className="h-14 rounded-[2px]"
                     style={{
-                      backgroundColor: "var(--info)",
-                      opacity: 0.15 + value * 0.7,
+                      backgroundColor:
+                        LOAD_DENSITY[
+                          Math.min(5, Math.floor(value * LOAD_DENSITY.length))
+                        ],
                     }}
                     title={`${DAYS[colIndex]}: ${Math.round(value * 100)}%`}
                   />
                 ))}
               </div>
             ))}
-            <div className="grid grid-cols-7 gap-2 pt-1 text-center text-[11px] text-muted-foreground">
+            <div className="grid grid-cols-7 gap-3 pt-2 text-center text-xs uppercase text-muted-foreground">
               {DAYS.map((day) => (
                 <span key={day}>{day}</span>
               ))}

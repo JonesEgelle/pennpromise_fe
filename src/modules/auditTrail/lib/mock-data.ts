@@ -34,7 +34,18 @@ function changeFor(action: AuditAction): AuditEntry["change"] {
     return { field: "status", old: "draft", new: null };
   }
   if (action === "create") {
-    return { field: "snapshot", old: null, new: "Automated Sukuk integrity snapshot" };
+    return {
+      field: "snapshot",
+      old: null,
+      new: "Automated Sukuk integrity snapshot",
+    };
+  }
+  if (action === "security_login") {
+    return {
+      field: "note",
+      old: null,
+      new: "MFA successful. Trusted device verification complete.",
+    };
   }
   return null;
 }
