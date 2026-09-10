@@ -203,7 +203,7 @@ function HubStatusTable({ data }: { data: SystemHealthData }) {
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Sharia Advisory Resp.
             </p>
-            <p className="text-2xl font-bold text-surface-dark">
+            <p className="text-2xl font-bold text-foreground">
               {data.hubFooter.advisoryRespMs}ms{" "}
               <span className="text-sm font-medium text-success">
                 {data.hubFooter.advisoryDeltaMs}ms
@@ -219,7 +219,7 @@ function HubStatusTable({ data }: { data: SystemHealthData }) {
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Non-Compliance Risk
             </p>
-            <p className="text-2xl font-bold text-surface-dark">
+            <p className="text-2xl font-bold text-foreground">
               {data.hubFooter.nonComplianceRiskPct}%{" "}
               <span className="text-sm font-medium text-primary">
                 +{data.hubFooter.nonComplianceDeltaPct}%
@@ -239,7 +239,7 @@ function HealthAlerts({ data }: { data: SystemHealthData }) {
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-[15px] border border-border bg-card">
       <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
-        <h3 className="flex items-center gap-2 text-[14px] font-bold text-surface-dark">
+        <h3 className="flex items-center gap-2 text-[14px] font-bold text-foreground">
           Active Compliance Alerts
           <span className="rounded-[9px] bg-[#FEE2E2] px-2 py-0.5 text-[10px] font-bold text-[#FF695B]">
             {data.alerts.length}
@@ -247,7 +247,7 @@ function HealthAlerts({ data }: { data: SystemHealthData }) {
         </h3>
         <button
           type="button"
-          className="shrink-0 text-[12px] font-bold text-surface-dark hover:underline disabled:opacity-50"
+          className="shrink-0 text-[12px] font-bold text-foreground hover:underline disabled:opacity-50"
           disabled={clearAll.isPending || data.alerts.length === 0}
           onClick={() => clearAll.mutate()}
         >
@@ -383,7 +383,7 @@ export function SystemHealthView() {
                 <h3 className="text-base font-semibold text-foreground">
                   Ethical Capital Distribution
                 </h3>
-                <p className="text-sm text-[#343434]">
+                <p className="text-sm text-muted-foreground">
                   Real-time Sharia-compliant routing across Nigerian zones
                 </p>
               </div>

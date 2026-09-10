@@ -22,7 +22,7 @@ export function AutoCheckCard({ autoCheck }: { autoCheck: KycAutoCheck }) {
           aria-hidden
         />
         <div className="flex flex-col gap-2">
-          <p className=" text-[16px] font-bold text-[#03053E]">
+          <p className=" text-[16px] font-bold text-foreground">
             NIMC &amp; Sharia <br /> Compliance Check
           </p>
           {/* <Badge variant={meta.variant}>{meta.label}</Badge> */}

@@ -37,20 +37,19 @@ function NotificationsForm({ prefs }: { prefs: NotificationPrefs }) {
 
   return (
     <SettingsSection
+      className="shadow-none"
       title="Notification"
       description="We may still send you important notifications about your account outside of your notification settings."
       actions={
         <>
           <Button
             variant="outline"
-            size="sm"
             disabled={!dirty || save.isPending}
             onClick={() => setDraft(prefs)}
           >
             Cancel
           </Button>
           <Button
-            size="sm"
             isLoading={save.isPending}
             disabled={!dirty}
             onClick={() => save.mutate(draft)}
@@ -60,30 +59,26 @@ function NotificationsForm({ prefs }: { prefs: NotificationPrefs }) {
         </>
       }
     >
-      <ul className="divide-y divide-border">
+      <ul className="divide-y-2 divide-dashed divide-border">
         {ROWS.map((row) => (
           <li
             key={row.key}
-            className="flex items-start justify-between gap-4 py-4 first:pt-0 last:pb-0"
+            className="grid gap-3 py-5 first:pt-0 last:pb-0 sm:grid-cols-[1fr_1.4fr] sm:items-center sm:gap-8"
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-center gap-3">
               <Switch
                 checked={draft[row.key]}
                 onCheckedChange={(value) =>
                   setDraft((current) => ({ ...current, [row.key]: value }))
                 }
-                className="mt-0.5"
+                className="data-[state=checked]:bg-[#FF9500]"
                 aria-label={row.label}
               />
-              <div>
-                <p className="text-sm font-semibold text-foreground">
-                  {row.label}
-                </p>
-              </div>
+              <p className="text-sm font-semibold text-foreground">
+                {row.label}
+              </p>
             </div>
-            <p className="max-w-sm text-right text-sm text-muted-foreground">
-              {row.hint}
-            </p>
+            <p className="text-sm text-muted-foreground">{row.hint}</p>
           </li>
         ))}
       </ul>

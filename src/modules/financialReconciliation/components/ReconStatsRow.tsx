@@ -8,7 +8,7 @@ export function ReconStatsRow({ stats }: { stats: ReconStatTile[] }) {
       {stats.map((tile) => (
         <Card key={tile.id} className="space-y-3 p-5">
           <div className="flex items-start justify-between">
-            <p className="text-xs font-medium uppercase tracking-normal text-black">
+            <p className="text-xs font-medium uppercase tracking-normal text-foreground">
               {tile.label}
             </p>
             {tile.priority ? (
@@ -19,7 +19,7 @@ export function ReconStatsRow({ stats }: { stats: ReconStatTile[] }) {
               <StatDeltaBadge value={tile.delta} />
             )}
           </div>
-          <p className="text-2xl font-bold text-surface-dark">
+          <p className="text-2xl font-bold text-foreground">
             {tile.value}{" "}
             <span className="text-xs font-normal text-muted-foreground">
               {tile.sub}

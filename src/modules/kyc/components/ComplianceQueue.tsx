@@ -47,11 +47,11 @@ export function ComplianceQueue({
         )}
       </div>
 
-      <div className="flex items-center gap-3 rounded-xl border border-border bg-[#F2F4F6] p-4">
+      <div className="flex items-center gap-3 rounded-xl border border-border bg-muted p-4">
         <ShieldCheck className="size-4 shrink-0 text-primary" aria-hidden />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-foreground">Sharia Link</p>
-          <p className="text-[10px] text-[#454652B2] font-[400]">
+          <p className="text-[10px] text-muted-foreground font-[400]">
             Ethical screening &amp; NIMC database sync{" "}
             {shariaLink ? "enabled" : "disabled"}.
           </p>

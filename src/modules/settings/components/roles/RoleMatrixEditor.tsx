@@ -5,10 +5,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { PermissionMatrix } from "@/modules/settings/components/roles/PermissionMatrix";
 import { useSaveRoleMatrix } from "@/modules/settings/controllers/settingsController";
-import type {
-  PermissionColumn,
-  RoleDetail,
-} from "@/modules/settings/types";
+import type { PermissionColumn, RoleDetail } from "@/modules/settings/types";
 
 interface RoleMatrixEditorProps {
   role: RoleDetail;
@@ -32,11 +29,7 @@ export function RoleMatrixEditor({ role, onSaved }: RoleMatrixEditorProps) {
     0,
   );
 
-  const toggle = (
-    module: string,
-    column: PermissionColumn,
-    value: boolean,
-  ) => {
+  const toggle = (module: string, column: PermissionColumn, value: boolean) => {
     setMatrix((current) =>
       current.map((row) =>
         row.module === module ? { ...row, [column]: value } : row,
@@ -52,8 +45,8 @@ export function RoleMatrixEditor({ role, onSaved }: RoleMatrixEditorProps) {
   };
 
   return (
-    <div className="space-y-4">
-      <div>
+    <div>
+      <div className="bg-surface-muted p-5">
         <h3 className="text-base font-semibold text-foreground">
           {role.name} Permissions
         </h3>
@@ -63,29 +56,31 @@ export function RoleMatrixEditor({ role, onSaved }: RoleMatrixEditorProps) {
         </p>
       </div>
 
-      <PermissionMatrix
-        matrix={matrix}
-        onToggle={toggle}
-        disabled={save.isPending}
-      />
+      <div className="space-y-4">
+        <PermissionMatrix
+          matrix={matrix}
+          onToggle={toggle}
+          disabled={save.isPending}
+        />
 
-      <div className="flex justify-end gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={!dirty || save.isPending}
-          onClick={() => setMatrix(role.matrix)}
-        >
-          Discard
-        </Button>
-        <Button
-          size="sm"
-          isLoading={save.isPending}
-          disabled={!dirty}
-          onClick={onSave}
-        >
-          Save
-        </Button>
+        <div className="flex justify-end gap-2 p-5">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={!dirty || save.isPending}
+            onClick={() => setMatrix(role.matrix)}
+          >
+            Discard
+          </Button>
+          <Button
+            size="sm"
+            isLoading={save.isPending}
+            disabled={!dirty}
+            onClick={onSave}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </div>
   );

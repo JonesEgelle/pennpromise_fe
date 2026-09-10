@@ -76,7 +76,7 @@ export function TablePagination({
           disabled={isLoading || page <= 1}
           onClick={() => onPageChange(page - 1)}
           aria-label="Previous page"
-          className="text-[#000000] font-normal text-[14px]"
+          className="font-normal text-[14px] text-foreground"
         >
           {/* <ChevronLeft className="size-4" /> */}
           Prev
@@ -112,7 +112,7 @@ export function TablePagination({
           disabled={isLoading || page >= totalPages}
           onClick={() => onPageChange(page + 1)}
           aria-label="Next page"
-          className="text-[#000000] font-normal text-[14px]"
+          className="font-normal text-[14px] text-foreground"
         >
           {/* <ChevronRight className="size-4" /> */}
           Next

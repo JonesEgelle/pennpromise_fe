@@ -50,7 +50,7 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
       className={cn(
         "flex items-center gap-3 rounded-md px-8 py-4 text-sm font-medium transition-colors",
         "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground ",
-        active && "bg-sidebar-foreground text-foreground shadow-sm",
+        active && "bg-sidebar-foreground text-surface-dark shadow-sm",
       )}
     >
       <Icon
