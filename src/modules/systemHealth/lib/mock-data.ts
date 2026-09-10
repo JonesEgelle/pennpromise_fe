@@ -49,6 +49,7 @@ const base: Omit<SystemHealthData, "alerts"> = {
       value: "42.8%",
       delta: 2.4,
       bars: [30, 45, 40, 60, 75, 55, 50, 45, 80, 65],
+      tone: "blue",
     },
     {
       id: "lagos-memory",
@@ -56,6 +57,7 @@ const base: Omit<SystemHealthData, "alerts"> = {
       value: "12.4 GB",
       delta: 8.1,
       bars: [40, 42, 45, 50, 55, 60, 62, 58, 64, 60],
+      tone: "gold",
     },
     {
       id: "abuja-traffic",
@@ -63,6 +65,7 @@ const base: Omit<SystemHealthData, "alerts"> = {
       value: "842 Mbps",
       delta: -1.2,
       bars: [25, 35, 30, 50, 70, 85, 65, 55, 60, 58],
+      tone: "blue",
     },
   ],
   hubNodes: HUB_NODES,

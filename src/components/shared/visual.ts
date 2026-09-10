@@ -10,7 +10,8 @@ export type AccentTone =
   | "green"
   | "red"
   | "gold"
-  | "neutral";
+  | "neutral"
+  | "yellow";
 
 /** Solid fill for progress indicators / bars. */
 export const ACCENT_FILL_CLASS: Record<AccentTone, string> = {
@@ -19,6 +20,7 @@ export const ACCENT_FILL_CLASS: Record<AccentTone, string> = {
   green: "bg-chart-green",
   red: "bg-chart-red",
   gold: "bg-chart-gold",
+  yellow: "bg-chart-yellow",
   neutral: "bg-foreground/70",
 };
 
@@ -29,5 +31,6 @@ export const ACCENT_CHIP_CLASS: Record<AccentTone, string> = {
   green: "bg-chart-green/10 text-chart-green",
   red: "bg-chart-red/10 text-chart-red",
   gold: "bg-chart-gold/10 text-chart-gold",
+  yellow: "bg-chart-yellow/10 text-chart-yellow",
   neutral: "bg-muted text-muted-foreground",
 };

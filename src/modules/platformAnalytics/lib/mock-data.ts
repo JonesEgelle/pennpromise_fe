@@ -51,7 +51,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
       icon: TrendUpIcon,
       value: "18m 45s",
       delta: 12.4,
-      accent: { percent: 21, tone: "gold" },
+      accent: { percent: 21, tone: "yellow" },
     },
   ],
   trend: [
@@ -66,7 +66,7 @@ export const PLATFORM_ANALYTICS_MOCK: PlatformAnalyticsData = {
       { label: "Sukuk Bonds (FGN/Corporate)", percent: 54, tone: "navy" },
       { label: "Halal Equity Funds", percent: 22, tone: "blue" },
       { label: "Ijarah (Leasing) Assets", percent: 16, tone: "red" },
-      { label: "Murabaha Trades", percent: 8, tone: "gold" },
+      { label: "Murabaha Trades", percent: 8, tone: "yellow" },
     ],
     note: "“Sukuk oversubscription in Kano & Lagos drove 22% monthly AUM growth.”",
   },
