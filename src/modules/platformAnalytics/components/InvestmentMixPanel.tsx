@@ -9,7 +9,10 @@ interface InvestmentMixPanelProps {
 
 export function InvestmentMixPanel({ slices, note }: InvestmentMixPanelProps) {
   return (
-    <SectionCard title="Halal Investment Mix">
+    <SectionCard
+      title="Halal Investment Mix"
+      className="shadow-none rounded-[15px]"
+    >
       <BarList
         items={slices.map((slice) => ({
           label: slice.label,

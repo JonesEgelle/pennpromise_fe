@@ -38,6 +38,7 @@ export function TrendPanel({ trend }: { trend: TrendPoint[] }) {
     <SectionCard
       title="Halal Growth & Sukuk AUM (NGN) Trends"
       action={<Legend />}
+      className="shadow-none rounded-[15px]"
     >
       <TrendChart
         data={trend}

@@ -14,8 +14,10 @@ interface MetricPromoPanelProps {
   stats?: PromoStat[];
   /** Optional action row (buttons). */
   actions?: React.ReactNode;
-  /** Decorative glyph pinned to the bottom-right, rendered low-opacity behind content. */
+  /** Decorative glyph rendered low-opacity behind content. */
   watermark?: React.ReactNode;
+  /** Position/size classes for the watermark wrapper. Defaults to bottom-right. */
+  watermarkClassName?: string;
   className?: string;
 }
 
@@ -30,12 +32,13 @@ export function MetricPromoPanel({
   stats,
   actions,
   watermark,
+  watermarkClassName,
   className,
 }: MetricPromoPanelProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl bg-[#FF4D4D] p-6 text-primary-foreground",
+        "relative overflow-hidden rounded-[8px] bg-[#FF4D4D] p-6 text-primary-foreground",
         className,
       )}
     >
@@ -45,7 +48,10 @@ export function MetricPromoPanel({
       />
       {watermark ? (
         <div
-          className="pointer-events-none absolute bottom-0 right-0 text-white/10"
+          className={cn(
+            "pointer-events-none absolute text-white/10",
+            watermarkClassName ?? "bottom-0 right-0",
+          )}
           aria-hidden
         >
           {watermark}
@@ -64,7 +70,7 @@ export function MetricPromoPanel({
                 <dt className="text-xs font-medium uppercase tracking-wide text-primary-foreground/70">
                   {stat.label}
                 </dt>
-                <dd className="mt-1 text-xl font-semibold">{stat.value}</dd>
+                <dd className="mt-1 text-2xl font-bold">{stat.value}</dd>
               </div>
             ))}
           </dl>

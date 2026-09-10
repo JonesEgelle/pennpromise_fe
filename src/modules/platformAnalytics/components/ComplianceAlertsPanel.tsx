@@ -40,7 +40,10 @@ export function ComplianceAlertsPanel({
         header: "Severity",
         width: "110px",
         render: (row) => (
-          <Badge variant={SEVERITY_VARIANT[row.severity]}>
+          <Badge
+            className="rounded-[12px] text-[10px] font-bold px-[8px] py-[2px]"
+            variant={SEVERITY_VARIANT[row.severity]}
+          >
             {row.severity.toUpperCase()}
           </Badge>
         ),
@@ -49,7 +52,7 @@ export function ComplianceAlertsPanel({
         key: "source",
         header: "Source",
         render: (row) => (
-          <span className="font-medium text-foreground">{row.source}</span>
+          <span className="font-bold text-foreground">{row.source}</span>
         ),
       },
       {
@@ -76,25 +79,27 @@ export function ComplianceAlertsPanel({
   );
 
   return (
-    <section className="space-y-3">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-base font-semibold tracking-tight text-foreground">
+    <section className="overflow-hidden rounded-[15px] border border-border bg-card">
+      <div className="flex items-center justify-between gap-3 p-3">
+        <h3 className="text-lg font-semibold tracking-tight text-foreground">
           Compliance Alerts (NG)
         </h3>
         <Link
           href={APP_ROUTES.COMPLIANCE_MONITORING}
-          className="text-xs font-medium text-info hover:underline"
+          className="text-sm font-medium text-info hover:underline"
         >
           VIEW ALL
         </Link>
       </div>
-      <DataTable
-        columns={columns}
-        data={alerts}
-        getRowId={(row) => row.id}
-        rowActions={rowActions}
-        emptyMessage="No compliance alerts."
-      />
+      <div className="[&>div]:rounded-none [&>div]:border-x-0 [&>div]:border-b-0">
+        <DataTable
+          columns={columns}
+          data={alerts}
+          getRowId={(row) => row.id}
+          rowActions={rowActions}
+          emptyMessage="No compliance alerts."
+        />
+      </div>
     </section>
   );
 }

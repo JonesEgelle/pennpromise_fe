@@ -175,7 +175,7 @@ function DataTableInner<Row>({
                             aria-label="Row actions"
                             className="grid size-8 place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            <MoreVertical className="size-4" />
+                            <MoreVertical className="size-4 text-info" />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             {rowActions.map((action) => (
