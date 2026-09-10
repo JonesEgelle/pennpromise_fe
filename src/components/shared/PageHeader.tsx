@@ -35,7 +35,7 @@ export function PageHeader({
       {breadcrumbs && breadcrumbs.length > 0 ? (
         <nav
           aria-label="Breadcrumb"
-          className="flex items-center gap-1 text-xs text-muted-foreground"
+          className="flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-muted-foreground"
         >
           {breadcrumbs.map((crumb, index) => {
             const isLast = index === breadcrumbs.length - 1;
@@ -47,7 +47,7 @@ export function PageHeader({
                   </Link>
                 ) : (
                   <span
-                    className={cn(isLast && "text-foreground")}
+                    className={cn(isLast && "font-semibold text-info")}
                     aria-current={isLast ? "page" : undefined}
                   >
                     {crumb.label}

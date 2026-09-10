@@ -68,7 +68,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
   ) => setDraft((current) => ({ ...current, [key]: value }));
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 shadow-none border-none">
       <p className="mb-3 text-sm font-semibold text-foreground">
         Search Filters
       </p>
@@ -78,7 +78,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
             value={draft.admin}
             onValueChange={(value) => set("admin", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="shadow-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -98,7 +98,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
               set("action", value as AuditAction | "all")
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="shadow-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -116,7 +116,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
             value={draft.module}
             onValueChange={(value) => set("module", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="shadow-none">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -132,6 +132,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
         <Field label="Start Date">
           <Input
             type="date"
+            className="shadow-none"
             value={draft.startDate}
             onChange={(event) => set("startDate", event.target.value)}
           />
@@ -140,6 +141,7 @@ export function AuditFilters({ onApply }: AuditFiltersProps) {
         <Field label="End Date">
           <Input
             type="date"
+            className="shadow-none"
             value={draft.endDate}
             onChange={(event) => set("endDate", event.target.value)}
           />
