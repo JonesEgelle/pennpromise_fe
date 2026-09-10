@@ -50,7 +50,7 @@ function FlagCard({
           {formatDate(flag.at, "relative")}
         </span>
       </div>
-      <p className="text-xs text-[#03053E]">{flag.txnId}</p>
+      <p className="text-xs text-foreground">{flag.txnId}</p>
 
       {flag.note ? (
         <p
@@ -64,7 +64,7 @@ function FlagCard({
         >
           <div className="min-w-0 flex-1">
             <p className="text-muted-foreground">{flag.internalLabel}</p>
-            <p className="font-bold text-[15px] text-[#191C1E]">
+            <p className="font-bold text-[15px] text-foreground">
               {flag.internalAmount === null
                 ? "NULL"
                 : formatNairaAmount(flag.internalAmount)}

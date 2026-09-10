@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,19 @@ const CURRENCIES = [
   { value: "ngn", label: "NGN — Nigerian Naira (₦)" },
   { value: "usd", label: "USD — US Dollar ($)" },
 ];
+
+const FIELD_FILL = "bg-muted shadow-none";
+const ORANGE_SWITCH = "data-[state=checked]:bg-[#FF9500]";
+
+function initials(name: string): string {
+  return name
+    .replace(/[^A-Za-z\s]/g, "")
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
 
 function ConfigForm({ config }: { config: SystemConfig }) {
   const [draft, setDraft] = React.useState(config);
@@ -63,26 +77,24 @@ function ConfigForm({ config }: { config: SystemConfig }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight text-foreground">
+      <Card className="flex flex-col gap-3 rounded-[15px] p-5 shadow-none sm:flex-row sm:items-center sm:justify-between border-none">
+        <div className="space-y-1">
+          <h2 className="text-base font-bold text-foreground">
             System Configuration
           </h2>
           <p className="text-sm text-muted-foreground">
             Global system settings, branding, and API integrations.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex shrink-0 gap-2">
           <Button
             variant="outline"
-            size="sm"
             disabled={!dirty || save.isPending}
             onClick={() => setDraft(config)}
           >
             Cancel
           </Button>
           <Button
-            size="sm"
             isLoading={save.isPending}
             disabled={!dirty}
             onClick={() => save.mutate(draft)}
@@ -90,13 +102,11 @@ function ConfigForm({ config }: { config: SystemConfig }) {
             Save
           </Button>
         </div>
-      </div>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Left column */}
-        <div className="space-y-6">
-          <Card className="space-y-4 p-5">
-            <h3 className="text-sm font-semibold text-foreground">
+        <Card className="space-y-4 rounded-[15px] p-5 shadow-none border-none">
+            <h3 className="text-base font-semibold text-foreground">
               General Settings
             </h3>
             <div className="space-y-1.5">
@@ -108,6 +118,7 @@ function ConfigForm({ config }: { config: SystemConfig }) {
               </label>
               <Input
                 id="org-name"
+                className={FIELD_FILL}
                 value={draft.general.organisationName}
                 onChange={(event) =>
                   setGeneral("organisationName", event.target.value)
@@ -122,7 +133,7 @@ function ConfigForm({ config }: { config: SystemConfig }) {
                 value={draft.general.timezone}
                 onValueChange={(value) => setGeneral("timezone", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className={FIELD_FILL}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -142,7 +153,7 @@ function ConfigForm({ config }: { config: SystemConfig }) {
                 value={draft.general.baseCurrency}
                 onValueChange={(value) => setGeneral("baseCurrency", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className={FIELD_FILL}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -156,9 +167,33 @@ function ConfigForm({ config }: { config: SystemConfig }) {
             </div>
           </Card>
 
-          <Card className="p-5">
+          <Card className="rounded-[15px] p-5 shadow-none border-none">
+            <h3 className="mb-3 text-base font-semibold text-foreground">
+              Notification Preferences
+            </h3>
+            <ul className="space-y-1">
+              {draft.notifications.map((row) => (
+                <li
+                  key={row.key}
+                  className="flex items-center justify-between gap-4 py-2"
+                >
+                  <span className="text-sm text-foreground">{row.label}</span>
+                  <Switch
+                    checked={row.enabled}
+                    onCheckedChange={(value) =>
+                      toggleNotification(row.key, value)
+                    }
+                    className={ORANGE_SWITCH}
+                    aria-label={row.label}
+                  />
+                </li>
+              ))}
+            </ul>
+          </Card>
+
+          <Card className="rounded-[15px] p-5 shadow-none border-none">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-base font-semibold text-foreground">
                 Recent Sharia Advisory Changes
               </h3>
               <button
@@ -169,35 +204,42 @@ function ConfigForm({ config }: { config: SystemConfig }) {
               </button>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs">
+              <table className="w-full text-xs ">
                 <thead>
-                  <tr className="border-b border-border text-left text-muted-foreground">
+                  <tr className="border-b border-border bg-muted text-center align-bottom text-[10px] uppercase tracking-wide text-muted-foreground">
                     <th className="py-2 pr-3 font-medium">Authorized User</th>
                     <th className="py-2 pr-3 font-medium">Adjustment</th>
-                    <th className="py-2 pr-3 font-medium">Previous</th>
+                    <th className="py-2 pr-3 font-medium">Previous Status</th>
                     <th className="py-2 pr-3 font-medium">New Status</th>
-                    <th className="py-2 font-medium">Timestamp</th>
+                    <th className="py-2 font-medium">Timestamp (WAT)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {config.advisoryChanges.map((change) => (
                     <tr
                       key={change.id}
-                      className="border-b border-border last:border-b-0"
+                      className="text-center border-b border-border last:border-b-0"
                     >
-                      <td className="py-2 pr-3 font-medium text-foreground">
-                        {change.authorizedUser}
+                      <td className="py-3 pr-3">
+                        <span className="flex items-center gap-2 font-medium text-foreground">
+                          <Avatar className="size-6">
+                            <AvatarFallback className="bg-success-subtle text-[10px] font-semibold text-success">
+                              {initials(change.authorizedUser)}
+                            </AvatarFallback>
+                          </Avatar>
+                          {change.authorizedUser}
+                        </span>
                       </td>
-                      <td className="py-2 pr-3 text-text-secondary">
+                      <td className="py-3 pr-3 text-text-secondary">
                         {change.adjustment}
                       </td>
-                      <td className="py-2 pr-3 text-muted-foreground">
+                      <td className="py-3 pr-3 text-info">
                         {change.previousStatus}
                       </td>
-                      <td className="py-2 pr-3 font-medium text-primary">
+                      <td className="py-3 pr-3 font-medium text-primary">
                         {change.newStatus}
                       </td>
-                      <td className="py-2 text-muted-foreground">
+                      <td className="py-3 text-muted-foreground">
                         {formatDate(change.at, "datetime")}
                       </td>
                     </tr>
@@ -206,45 +248,17 @@ function ConfigForm({ config }: { config: SystemConfig }) {
               </table>
             </div>
           </Card>
-        </div>
 
-        {/* Right column */}
-        <div className="space-y-6">
-          <Card className="p-5">
-            <h3 className="mb-3 text-sm font-semibold text-foreground">
-              Notification Preferences
-            </h3>
-            <ul className="divide-y divide-border">
-              {draft.notifications.map((row) => (
-                <li
-                  key={row.key}
-                  className="flex items-center justify-between gap-4 py-2.5"
-                >
-                  <span className="text-sm text-text-secondary">
-                    {row.label}
-                  </span>
-                  <Switch
-                    checked={row.enabled}
-                    onCheckedChange={(value) =>
-                      toggleNotification(row.key, value)
-                    }
-                    aria-label={row.label}
-                  />
-                </li>
-              ))}
-            </ul>
-          </Card>
-
-          <Card className="p-5">
+          <Card className="rounded-[15px] p-5 shadow-none border-none">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-base font-bold text-foreground">
                 Ethical Feature Flags
               </h3>
-              <span className="rounded-md border border-border p-0.5 text-xs">
-                <span className="rounded px-2 py-0.5 text-muted-foreground">
+              <span className="inline-flex items-center rounded-md border border-border p-0.5 text-xs">
+                <span className="rounded-[8px] bg-muted p-2 text-muted-foreground">
                   Staging
                 </span>
-                <span className="rounded bg-muted px-2 py-0.5 font-medium text-foreground">
+                <span className="rounded-[8px]  p-2 font-medium text-foreground">
                   Production
                 </span>
               </span>
@@ -254,11 +268,11 @@ function ConfigForm({ config }: { config: SystemConfig }) {
                 <li
                   key={flag.key}
                   className={cn(
-                    "flex items-start justify-between gap-4 rounded-lg border border-border p-3",
+                    "flex items-start justify-between gap-4 rounded-[7px] border border-border p-4",
                   )}
                 >
                   <div>
-                    <p className="text-sm font-medium text-foreground">
+                    <p className="text-sm font-semibold text-foreground">
                       {flag.label}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -269,13 +283,12 @@ function ConfigForm({ config }: { config: SystemConfig }) {
                     checked={flag.enabled}
                     onCheckedChange={(value) => toggleFlag(flag.key, value)}
                     aria-label={flag.label}
-                    className="mt-0.5 shrink-0"
+                    className={cn("mt-0.5 shrink-0", ORANGE_SWITCH)}
                   />
                 </li>
               ))}
             </ul>
           </Card>
-        </div>
       </div>
     </div>
   );

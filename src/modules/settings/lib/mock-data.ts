@@ -113,7 +113,8 @@ const changeLog: ChangeLogEntry[] = [
     id: "cl-2",
     at: new Date(Date.now() - 2 * 60_000).toISOString(),
     title: "New Sharia Role Created",
-    detail: "System added a new hierarchy level: Zonal Halal Risk Specialist.",
+    detail: "System added a new hierarchy level:",
+    highlight: "Zonal Halal Risk Specialist",
     kind: "role_created",
   },
   {

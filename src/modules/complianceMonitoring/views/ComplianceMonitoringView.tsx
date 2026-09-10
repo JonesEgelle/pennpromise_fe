@@ -321,7 +321,7 @@ export function ComplianceMonitoringView() {
                   <button
                     key={doc.id}
                     type="button"
-                    className="flex w-full items-center gap-3 rounded-xl bg-[#F8FAFC] p-4 text-left text-sm transition-colors hover:bg-muted"
+                    className="flex w-full items-center gap-3 rounded-xl bg-surface-muted p-4 text-left text-sm transition-colors hover:bg-muted"
                   >
                     <FileLinesIcon
                       className="size-5 shrink-0 text-info"

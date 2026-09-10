@@ -3,12 +3,12 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Copy } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CopyIcon } from "@/components/icons/action-icons";
 import { SettingsSection } from "@/modules/settings/components/SettingsSection";
 import {
   useSecurityMutation,
@@ -61,6 +61,7 @@ export function TwoFactorForm() {
 
   return (
     <SettingsSection
+      bare
       title="Two Factor Authentication"
       description="Increase your account's security by setting up two-factor authentication."
     >
@@ -81,13 +82,13 @@ export function TwoFactorForm() {
                 {data?.secretKey}
               </code>
               <Button variant="outline" size="sm" onClick={copyKey}>
-                <Copy className="size-4" />
+                <CopyIcon className="size-4" />
                 Copy key
               </Button>
               <button
                 type="button"
                 onClick={() => toast.message("QR code — coming soon.")}
-                className="text-xs font-medium text-info hover:underline"
+                className="text-xs font-medium text-primary underline hover:underline-offset-3"
               >
                 View Barcode/QR Code
               </button>
@@ -103,8 +104,8 @@ export function TwoFactorForm() {
             <Input
               inputMode="numeric"
               maxLength={6}
-              placeholder="000000"
-              className="w-40 tracking-[0.4em]"
+              placeholder="Enter code"
+              className="w-80 tracking-[0.4em] shadow-none"
               {...form.register("code")}
             />
             {form.formState.errors.code ? (

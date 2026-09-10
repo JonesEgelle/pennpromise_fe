@@ -28,7 +28,11 @@ const FIELDS: {
 }[] = [
   { name: "oldPasscode", label: "Old Passcode", id: "old-passcode" },
   { name: "newPasscode", label: "New Passcode", id: "new-passcode" },
-  { name: "confirmPasscode", label: "Confirm New Passcode", id: "confirm-passcode" },
+  {
+    name: "confirmPasscode",
+    label: "Confirm New Passcode",
+    id: "confirm-passcode",
+  },
 ];
 
 export function ChangePasscodeForm() {
@@ -46,20 +50,19 @@ export function ChangePasscodeForm() {
 
   return (
     <SettingsSection
+      bare
       title="Change Passcode"
       description="Update your four digit transaction PIN."
       actions={
         <>
           <Button
             variant="outline"
-            size="sm"
             onClick={() => form.reset(EMPTY)}
             disabled={mutation.isPending}
           >
             Cancel
           </Button>
           <Button
-            size="sm"
             isLoading={mutation.isPending}
             disabled={!form.formState.isValid}
             onClick={form.handleSubmit(onSubmit)}
@@ -76,6 +79,7 @@ export function ChangePasscodeForm() {
             inputMode="numeric"
             maxLength={4}
             autoComplete="off"
+            className="shadow-none"
             {...form.register(field.name)}
           />
           {errors[field.name] ? (

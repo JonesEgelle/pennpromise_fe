@@ -2,7 +2,6 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { PageHeader } from "@/components/shared/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { APP_ROUTES, SETTINGS_TABS } from "@/constants/routes";
 import { NotificationsTab } from "@/modules/settings/components/notifications/NotificationsTab";
@@ -13,7 +12,7 @@ import { UserManagementTab } from "@/modules/settings/components/userManagement/
 
 const TABS = [
   { value: SETTINGS_TABS.SECURITY, label: "Security" },
-  { value: SETTINGS_TABS.NOTIFICATIONS, label: "Notifications" },
+  { value: SETTINGS_TABS.NOTIFICATIONS, label: "Notification" },
   { value: SETTINGS_TABS.USER_MANAGEMENT, label: "User Management" },
   { value: SETTINGS_TABS.ROLES_PERMISSIONS, label: "Roles & Permissions" },
   { value: SETTINGS_TABS.SYSTEM_CONFIGURATION, label: "System Configuration" },
@@ -25,9 +24,7 @@ export function SettingsView() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requested = searchParams.get("tab") ?? "";
-  const active = VALID_TABS.has(requested)
-    ? requested
-    : SETTINGS_TABS.SECURITY;
+  const active = VALID_TABS.has(requested) ? requested : SETTINGS_TABS.SECURITY;
 
   const onTabChange = (value: string) => {
     router.replace(`${APP_ROUTES.SETTINGS}?tab=${value}`);
@@ -35,13 +32,8 @@ export function SettingsView() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Settings"
-        description="Security, notifications, users, roles, and system configuration."
-      />
-
       <Tabs value={active} onValueChange={onTabChange}>
-        <TabsList className="flex-wrap">
+        <TabsList className="flex-wrap w-fit">
           {TABS.map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>
               {tab.label}

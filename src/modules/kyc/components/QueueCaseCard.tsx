@@ -38,7 +38,7 @@ export function QueueCaseCard({
         <span
           className={cn(
             "rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide",
-            highPriority ? "bg-primary/10 text-primary" : "bg-muted text-black",
+            highPriority ? "bg-primary/10 text-primary" : "bg-muted text-foreground",
           )}
         >
           {highPriority ? "High priority" : "Standard"}
@@ -49,10 +49,10 @@ export function QueueCaseCard({
         </span>
       </div>
 
-      <p className="mt-3 text-[16px] font-bold text-[#191C1E]">
+      <p className="mt-3 text-[16px] font-bold text-foreground">
         {kycCase.applicantName}
       </p>
-      <p className="text-sm text-[#454652] font-[400]">
+      <p className="text-sm text-muted-foreground font-[400]">
         {kycCase.tier} · {kycCase.location}
       </p>
 
@@ -64,8 +64,8 @@ export function QueueCaseCard({
               className={cn(
                 "grid size-7 place-items-center rounded-full text-[10px] font-semibold ring-2 ring-card",
                 index === 0
-                  ? "bg-[#E0E0FF] text-text-secondary"
-                  : "bg-[#D9E2FF] text-info",
+                  ? "bg-muted text-foreground"
+                  : "bg-info/10 text-info",
                 index > 0 && "-ml-1",
               )}
             >
@@ -73,7 +73,7 @@ export function QueueCaseCard({
             </span>
           ))}
         </span>
-        <span className="ml-3 text-sm text-[#454652] font-[400]">
+        <span className="ml-3 text-sm text-muted-foreground font-[400]">
           Reviewing now
         </span>
       </div>

@@ -108,7 +108,7 @@ export function TransactionsView() {
         render: (row) => (
           <div className="flex items-center gap-2">
             <Avatar className="size-8">
-              <AvatarFallback className="text-16px font-bold text-[#000666]">
+              <AvatarFallback className="text-16px font-bold text-foreground">
                 {initials(row.client.name)}
               </AvatarFallback>
             </Avatar>
@@ -126,7 +126,7 @@ export function TransactionsView() {
         header: "Product",
         render: (row) => (
           <span className="flex items-center gap-2 capitalize">
-            <BankIcon className="size-4 text-black" aria-hidden />
+            <BankIcon className="size-4 text-foreground" aria-hidden />
             {row.product}
           </span>
         ),
@@ -135,7 +135,7 @@ export function TransactionsView() {
         key: "amountNgn",
         header: "Amount",
         render: (row) => (
-          <span className=" font-bold text-black tracking-normal ">
+          <span className=" font-bold text-foreground tracking-normal ">
             {formatNairaAmount(row.amountNgn)}
           </span>
         ),
