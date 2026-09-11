@@ -13,6 +13,7 @@ import { TRANSACTIONS_QUERY_KEYS } from "@/modules/transactions/controllers/quer
 import {
   mockCreateTransaction,
   mockDeleteTransaction,
+  mockGetTransaction,
   mockListTransactions,
   mockUpdateTransaction,
   type TransactionInput,
@@ -27,6 +28,14 @@ export function useTransactions(params: TransactionListParams) {
     queryKey: TRANSACTIONS_QUERY_KEYS.list(params),
     queryFn: () => mockListTransactions(params),
     placeholderData: keepPreviousData,
+  });
+}
+
+export function useTransaction(id: string | null) {
+  return useQuery({
+    queryKey: TRANSACTIONS_QUERY_KEYS.detail(id ?? "none"),
+    queryFn: () => mockGetTransaction(id as string),
+    enabled: Boolean(id),
   });
 }
 

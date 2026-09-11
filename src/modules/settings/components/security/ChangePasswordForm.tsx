@@ -66,20 +66,19 @@ export function ChangePasswordForm() {
 
   return (
     <SettingsSection
+      bare
       title="Change Password"
       description="Update your password here."
       actions={
         <>
           <Button
             variant="outline"
-            size="sm"
             onClick={() => form.reset(EMPTY)}
             disabled={mutation.isPending}
           >
             Cancel
           </Button>
           <Button
-            size="sm"
             isLoading={mutation.isPending}
             disabled={!form.formState.isValid}
             onClick={form.handleSubmit(onSubmit)}
@@ -94,6 +93,7 @@ export function ChangePasswordForm() {
           id="old-password"
           autoComplete="current-password"
           {...form.register("oldPassword")}
+          className="shadow-none"
         />
         {errors.oldPassword ? (
           <p className="text-xs text-destructive">
@@ -111,6 +111,7 @@ export function ChangePasswordForm() {
           id="new-password"
           autoComplete="new-password"
           {...form.register("newPassword")}
+          className="shadow-none"
         />
         {errors.newPassword ? (
           <p className="text-xs text-destructive">
@@ -124,6 +125,7 @@ export function ChangePasswordForm() {
           id="confirm-password"
           autoComplete="new-password"
           {...form.register("confirmPassword")}
+          className="shadow-none"
         />
         {errors.confirmPassword ? (
           <p className="text-xs text-destructive">

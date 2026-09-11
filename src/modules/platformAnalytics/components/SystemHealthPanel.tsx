@@ -1,6 +1,9 @@
-import { Database, Server, ShieldCheck } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
+import {
+  DatabaseIcon,
+  SealCheckIcon,
+  ServerRackIcon,
+} from "@/components/icons/status-icons";
 import { SectionCard } from "@/components/shared/SectionCard";
 import { cn } from "@/lib/utils";
 import type {
@@ -9,7 +12,7 @@ import type {
   SystemHealthComponentStatus,
 } from "@/modules/platformAnalytics/types";
 
-const ROW_ICON = [Server, Database, ShieldCheck];
+const ROW_ICON = [ServerRackIcon, DatabaseIcon, SealCheckIcon];
 
 const STATUS_DOT: Record<HealthStatus, string> = {
   live: "bg-success",
@@ -54,17 +57,18 @@ export function SystemHealthPanel({
     <SectionCard
       title="System Health"
       action={<Badge variant={badge.variant}>{badge.label}</Badge>}
+      className="shadow-none rounded-[15px]"
     >
       <ul className="space-y-4">
         {components.map((component, index) => {
           const Icon = ROW_ICON[index % ROW_ICON.length];
           return (
             <li key={component.id} className="flex items-center gap-3">
-              <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-muted text-muted-foreground">
+              <span className="grid size-9 shrink-0 place-items-center rounded-[4px] bg-[#F8FAFC] text-surface-dark font-bold">
                 <Icon className="size-4" aria-hidden />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-foreground">
+                <p className="truncate text-sm font-bold text-foreground ">
                   {component.name}
                 </p>
                 <p className="truncate text-xs text-muted-foreground">
@@ -74,7 +78,7 @@ export function SystemHealthPanel({
               <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                 <span
                   className={cn(
-                    "size-2 rounded-full",
+                    "size-2 rounded-full animate-pulse",
                     STATUS_DOT[component.status],
                   )}
                   aria-hidden

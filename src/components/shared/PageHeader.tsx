@@ -11,7 +11,8 @@ export interface Breadcrumb {
 
 interface PageHeaderProps {
   title: string;
-  description?: string;
+  /** Plain string, or rich content when part of the line needs its own style. */
+  description?: React.ReactNode;
   /**
    * Optional — breadcrumbs are hidden on most screens in the design source, so
    * this is an opt-in slot, not baked-in chrome.
@@ -34,7 +35,7 @@ export function PageHeader({
       {breadcrumbs && breadcrumbs.length > 0 ? (
         <nav
           aria-label="Breadcrumb"
-          className="flex items-center gap-1 text-xs text-muted-foreground"
+          className="flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-muted-foreground"
         >
           {breadcrumbs.map((crumb, index) => {
             const isLast = index === breadcrumbs.length - 1;
@@ -46,7 +47,7 @@ export function PageHeader({
                   </Link>
                 ) : (
                   <span
-                    className={cn(isLast && "text-foreground")}
+                    className={cn(isLast && "font-semibold text-info")}
                     aria-current={isLast ? "page" : undefined}
                   >
                     {crumb.label}
@@ -61,7 +62,7 @@ export function PageHeader({
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-xl font-bold tracking-tight text-foreground">
             {title}
           </h1>
           {description ? (

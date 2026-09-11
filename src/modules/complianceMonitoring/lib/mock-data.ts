@@ -7,7 +7,7 @@ import type { ComplianceOverview } from "@/modules/complianceMonitoring/types";
 export const COMPLIANCE_OVERVIEW_MOCK: ComplianceOverview = {
   integrityScore: 96.8,
   integrityDelta: 2.1,
-  integrityBars: [40, 55, 48, 62, 70, 58, 66, 74, 80, 78],
+  integrityBars: [40, 55, 48, 62, 70],
   statusCards: [
     {
       id: "halal-equity",

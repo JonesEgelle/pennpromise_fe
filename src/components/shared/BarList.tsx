@@ -33,7 +33,7 @@ export function BarList({
 
   return (
     <div className={cn("space-y-4", className)}>
-      <ul className="space-y-3">
+      <ul className="space-y-6">
         {items.map((item) => (
           <li key={item.label} className="space-y-1.5">
             <div className="flex items-center justify-between gap-3 text-sm">

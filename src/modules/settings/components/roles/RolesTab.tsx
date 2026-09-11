@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -32,22 +31,32 @@ export function RolesTab() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-semibold tracking-tight text-foreground">
-            Your created roles &amp; permission below
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Define granular access control for your team.
-          </p>
+      <Card className="overflow-hidden rounded-[15px] shadow-none">
+        <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-1">
+            <h2 className="text-base font-bold text-foreground">
+              Roles &amp; Permissions
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Define granular access control for your team.
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <Button variant="outline">Cancel</Button>
+            <Button>Save</Button>
+          </div>
         </div>
-        <Button size="sm" onClick={() => setCreateOpen(true)}>
-          <Plus className="size-4" />
-          Create New Role
-        </Button>
-      </div>
+        <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-[18px] font-bold text-foreground">
+            Your created roles &amp; permission below
+          </h3>
+          <Button className="shrink-0" onClick={() => setCreateOpen(true)}>
+            Create New Role
+          </Button>
+        </div>
+      </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[350px_1fr]">
         <RoleList
           roles={roles}
           isLoading={rolesFetching}
@@ -55,24 +64,26 @@ export function RolesTab() {
           onSelect={setPickedId}
         />
 
-        <Card className="p-5">
-          {detailLoading || !roleDetail ? (
-            <div className="space-y-4">
-              <Skeleton className="h-6 w-48" />
-              <Skeleton className="h-64 w-full" />
-            </div>
-          ) : (
-            <RoleMatrixEditor
-              key={roleDetail.id}
-              role={roleDetail}
-              onSaved={() => undefined}
-            />
-          )}
-        </Card>
-      </div>
+        <div className="space-y-6">
+          <Card className="overflow-hidden rounded-[15px] shadow-none border-none">
+            {detailLoading || !roleDetail ? (
+              <div className="space-y-4 p-5">
+                <Skeleton className="h-6 w-48" />
+                <Skeleton className="h-64 w-full" />
+              </div>
+            ) : (
+              <RoleMatrixEditor
+                key={roleDetail.id}
+                role={roleDetail}
+                onSaved={() => undefined}
+              />
+            )}
+          </Card>
 
-      <ChangeLogPanel />
-      <RolesStatsRow />
+          <ChangeLogPanel />
+          <RolesStatsRow />
+        </div>
+      </div>
 
       <CreateRoleModal open={createOpen} onOpenChange={setCreateOpen} />
     </div>

@@ -1,3 +1,4 @@
+import { CheckIcon } from "@/components/icons/status-icons";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import type { ChecklistKey, KycChecklistItem } from "@/modules/kyc/types";
@@ -15,40 +16,48 @@ export function ShariaChecklist({
 }: ShariaChecklistProps) {
   return (
     <div className="space-y-3">
-      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
         Sharia Compliance Checklist
       </h3>
-      <ul className="space-y-2">
-        {items.map((item) => (
-          <li key={item.key}>
-            <label
-              className={cn(
-                "flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition-colors",
-                item.checked
-                  ? "border-primary/50 bg-primary/5"
-                  : "border-border hover:bg-muted/40",
-                disabled && "cursor-not-allowed opacity-60",
-              )}
-            >
-              <Checkbox
-                checked={item.checked}
-                disabled={disabled}
-                onCheckedChange={(value) =>
-                  onToggle(item.key, value === true)
-                }
-                className="mt-0.5"
-              />
-              <span className="space-y-0.5">
-                <span className="block text-sm font-medium text-foreground">
-                  {item.title}
+      <ul className="space-y-3">
+        {items.map((item) => {
+          // The design highlights the BVN / Haram-free item in the brand tone;
+          // every other completed item uses the info tone.
+          const attention = item.key === "bvn_haram_free";
+          return (
+            <li key={item.key}>
+              <label
+                className={cn(
+                  "flex cursor-pointer items-center gap-3 rounded-[15px] border p-4 transition-colors",
+                  item.checked
+                    ? attention
+                      ? "border-primary bg-primary/5"
+                      : "border-info bg-info-subtle"
+                    : "border-border hover:bg-muted/40",
+                  disabled && "cursor-not-allowed opacity-60",
+                )}
+              >
+                <Checkbox
+                  checked={item.checked}
+                  disabled={disabled}
+                  onCheckedChange={(value) =>
+                    onToggle(item.key, value === true)
+                  }
+                  icon={<CheckIcon />}
+                  className="mt-0.5 size-5 rounded-[5px] data-[state=checked]:border-success data-[state=checked]:bg-card data-[state=checked]:text-success shadow-none "
+                />
+                <span className="space-y-0.5">
+                  <span className="block text-sm font-semibold text-foreground">
+                    {item.title}
+                  </span>
+                  <span className="block text-[12px] text-muted-foreground">
+                    {item.description}
+                  </span>
                 </span>
-                <span className="block text-xs text-muted-foreground">
-                  {item.description}
-                </span>
-              </span>
-            </label>
-          </li>
-        ))}
+              </label>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

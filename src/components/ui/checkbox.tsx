@@ -8,8 +8,11 @@ import { cn } from "@/lib/utils";
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
+    /** Override the checked glyph. Defaults to the lucide `Check`. */
+    icon?: React.ReactNode;
+  }
+>(({ className, icon, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
@@ -24,7 +27,7 @@ const Checkbox = React.forwardRef<
     <CheckboxPrimitive.Indicator
       className={cn("flex items-center justify-center text-current")}
     >
-      <Check className="size-3.5" />
+      {icon ?? <Check className="size-3.5" />}
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));

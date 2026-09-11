@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { Calendar, Download, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  CalendarIcon,
+  ExportIcon,
+  ShariaAuditIcon,
+} from "@/components/icons/action-icons";
+import { NetworkGlyphIcon } from "@/components/icons/status-icons";
 import { MetricPromoPanel } from "@/components/shared/MetricPromoPanel";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { APP_ROUTES } from "@/constants/routes";
@@ -32,18 +37,18 @@ export function PlatformAnalyticsView() {
           <>
             {/* TODO(api-contract): range picker */}
             <Button variant="outline" size="sm" disabled>
-              <Calendar className="size-4" />
+              <CalendarIcon className="size-4" />
               Last 30 Days
             </Button>
             <Button variant="outline" size="sm" asChild>
               <Link href={APP_ROUTES.AUDIT_TRAIL}>
-                <ShieldCheck className="size-4" />
+                <ShariaAuditIcon className="size-4" />
                 Sharia Audit
               </Link>
             </Button>
             {/* TODO(api-contract): export mutation (pending/success/error/timeout) */}
             <Button size="sm" disabled>
-              <Download className="size-4" />
+              <ExportIcon className="size-4" />
               Export Compliance Report
             </Button>
           </>
@@ -63,9 +68,18 @@ export function PlatformAnalyticsView() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
+        <SystemHealthPanel components={data.health} />
+
+        <div className="lg:col-span-2">
+          <ComplianceAlertsPanel alerts={data.alerts} />
+        </div>
+      </div>
+
+      <div className="grid items-stretch gap-6 lg:grid-cols-3">
         <HalalSegmentsPanel segments={data.segments} />
         <div className="lg:col-span-2">
           <MetricPromoPanel
+            className="h-full "
             title="Sharia Q2 Outlook"
             body={outlook.narrative}
             stats={[
@@ -86,31 +100,27 @@ export function PlatformAnalyticsView() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <SystemHealthPanel components={data.health} />
-        <div className="lg:col-span-2">
-          <ComplianceAlertsPanel alerts={data.alerts} />
-        </div>
-      </div>
-
       <QuickActionsPanel actions={data.quickActions} />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <MetricPromoPanel
+            className="h-full rounded-[15px]"
             title="Ethical Intelligence NG"
             body="Our Northern-based AI models are monitoring 14,200+ concurrent sessions across Nigerian networks. Security protocols adjusted for improved detection of localized ethical risk patterns."
+            watermark={<NetworkGlyphIcon className="h-20 w-auto" />}
+            watermarkClassName="bottom-5 right-8"
             actions={
               <>
                 <Button
                   size="sm"
-                  className="border border-white/40 bg-transparent text-primary-foreground hover:bg-white/15"
+                  className="rounded-[10px] bg-white px-5 font-bold text-primary hover:bg-white/90"
                 >
                   Halal Analytics
                 </Button>
                 <Button
                   size="sm"
-                  className="border border-white/40 bg-transparent text-primary-foreground hover:bg-white/15"
+                  className="rounded-[10px] border border-white/50 bg-transparent px-5 font-bold text-primary-foreground hover:bg-white/15"
                 >
                   Audit Logs
                 </Button>

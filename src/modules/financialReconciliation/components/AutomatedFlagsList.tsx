@@ -30,17 +30,17 @@ function FlagCard({
       onClick={onSelect}
       aria-current={selected ? "true" : undefined}
       className={cn(
-        "w-full rounded-xl border border-l-2 p-3 text-left transition-colors",
+        "w-full   border-l-4 p-3 text-left transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         selected
-          ? "border-border border-l-primary bg-primary/5"
-          : "border-border border-l-transparent hover:bg-muted/40",
+          ? "border-border border-l-primary "
+          : "border-border border-l-[#F1F5F9] hover:bg-muted/40",
       )}
     >
       <div className="flex items-start justify-between gap-2">
         <p
           className={cn(
-            "text-xs font-semibold uppercase tracking-wide",
+            "text-[14px] font-bold uppercase tracking-wide",
             KIND_COLOR[flag.kind],
           )}
         >
@@ -50,17 +50,21 @@ function FlagCard({
           {formatDate(flag.at, "relative")}
         </span>
       </div>
-      <p className="text-xs text-muted-foreground">{flag.txnId}</p>
+      <p className="text-xs text-foreground">{flag.txnId}</p>
 
       {flag.note ? (
-        <p className="mt-2 rounded-md bg-muted/50 p-2 text-xs italic text-muted-foreground">
+        <p
+          className={`mt-2 rounded-md p-2 text-xs italic text-muted-foreground ${selected ? "bg-primary/5" : "bg-muted/50 "}`}
+        >
           {flag.note}
         </p>
       ) : (
-        <div className="mt-2 flex items-center gap-2 rounded-md bg-muted/40 p-2 text-xs">
+        <div
+          className={`mt-2 flex items-center gap-2 rounded-md  p-2 text-xs ${selected ? "bg-primary/5" : "bg-muted/40"}`}
+        >
           <div className="min-w-0 flex-1">
             <p className="text-muted-foreground">{flag.internalLabel}</p>
-            <p className="font-medium text-foreground">
+            <p className="font-bold text-[15px] text-foreground">
               {flag.internalAmount === null
                 ? "NULL"
                 : formatNairaAmount(flag.internalAmount)}
@@ -72,7 +76,7 @@ function FlagCard({
           />
           <div className="min-w-0 flex-1 text-right">
             <p className="text-muted-foreground">{flag.providerLabel}</p>
-            <p className="font-medium text-destructive">
+            <p className="font-bold text-destructive text-[13px]">
               {flag.providerAmount === null
                 ? "—"
                 : formatNairaAmount(flag.providerAmount)}
@@ -100,16 +104,16 @@ export function AutomatedFlagsList({
   newCount,
 }: AutomatedFlagsListProps) {
   return (
-    <div className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl  bg-card">
+      <div className="flex items-center justify-between border-b border-border bg-surface-muted px-3 py-5">
+        <h3 className="text-[16px] font-semibold text-foreground">
           Automated Flags
         </h3>
-        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase text-primary">
+        <span className="rounded-[9px] bg-[#FF695B] p-1.5 text-[12px] font-bold uppercase text-white">
           {newCount} New
         </span>
       </div>
-      <div className="flex-1 space-y-2 overflow-y-auto">
+      <div className="flex-1 space-y-2 overflow-y-auto py-4 scrollbar-hide">
         {isLoading && !flags ? (
           Array.from({ length: 3 }).map((_, index) => (
             <Skeleton key={index} className="h-24 w-full rounded-xl" />

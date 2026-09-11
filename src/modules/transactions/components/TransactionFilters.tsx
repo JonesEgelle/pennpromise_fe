@@ -66,7 +66,7 @@ export function TransactionFilters({
             onChange("dateRange", next as TransactionDateRange)
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="shadow-none">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -86,7 +86,7 @@ export function TransactionFilters({
             onChange("compliance", next as TransactionCompliance | "all")
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="shadow-none">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -107,12 +107,14 @@ export function TransactionFilters({
             placeholder="Min"
             value={value.amountMin}
             onChange={(event) => onChange("amountMin", event.target.value)}
+            className="shadow-none"
           />
           <Input
             inputMode="numeric"
             placeholder="Max"
             value={value.amountMax}
             onChange={(event) => onChange("amountMax", event.target.value)}
+            className="shadow-none"
           />
         </div>
       </Field>
@@ -122,6 +124,7 @@ export function TransactionFilters({
           placeholder="Search entity…"
           value={value.client}
           onChange={(event) => onChange("client", event.target.value)}
+          className="shadow-none"
         />
       </Field>
 
@@ -132,7 +135,7 @@ export function TransactionFilters({
             onChange("product", next as TransactionProduct | "all")
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="shadow-none">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

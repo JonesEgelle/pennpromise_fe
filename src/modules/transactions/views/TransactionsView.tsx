@@ -1,11 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Download, Landmark, Pencil, Plus, Trash2 } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  BankIcon,
+  BinIcon,
+  EditIcon,
+  ExportIcon,
+} from "@/components/icons/action-icons";
 import {
   DataTable,
   type Column,
@@ -17,6 +23,7 @@ import { TablePagination } from "@/components/shared/TablePagination";
 import { useDebounce } from "@/hooks/useDebounce";
 import { cn, formatDate, formatNairaAmount } from "@/lib/utils";
 import { DeleteTransactionDialog } from "@/modules/transactions/components/DeleteTransactionDialog";
+import { TransactionDetailModal } from "@/modules/transactions/components/TransactionDetailModal";
 import { TransactionFormModal } from "@/modules/transactions/components/TransactionFormModal";
 import {
   TransactionFilters,
@@ -61,6 +68,7 @@ export function TransactionsView() {
   const [createOpen, setCreateOpen] = React.useState(false);
   const [editing, setEditing] = React.useState<Transaction | null>(null);
   const [deleting, setDeleting] = React.useState<Transaction | null>(null);
+  const [detailId, setDetailId] = React.useState<string | null>(null);
 
   const client = useDebounce(filters.client);
   const amountMin = useDebounce(filters.amountMin);
@@ -100,10 +108,12 @@ export function TransactionsView() {
         render: (row) => (
           <div className="flex items-center gap-2">
             <Avatar className="size-8">
-              <AvatarFallback>{initials(row.client.name)}</AvatarFallback>
+              <AvatarFallback className="text-16px font-bold text-foreground">
+                {initials(row.client.name)}
+              </AvatarFallback>
             </Avatar>
             <div className="leading-tight">
-              <p className="font-medium text-foreground">{row.client.name}</p>
+              <p className="font-bold text-foreground">{row.client.name}</p>
               <p className="text-xs text-muted-foreground">
                 BVN: {row.client.bvnMasked}
               </p>
@@ -116,7 +126,7 @@ export function TransactionsView() {
         header: "Product",
         render: (row) => (
           <span className="flex items-center gap-2 capitalize">
-            <Landmark className="size-4 text-muted-foreground" aria-hidden />
+            <BankIcon className="size-4 text-foreground" aria-hidden />
             {row.product}
           </span>
         ),
@@ -125,7 +135,7 @@ export function TransactionsView() {
         key: "amountNgn",
         header: "Amount",
         render: (row) => (
-          <span className="font-medium text-foreground">
+          <span className=" font-bold text-foreground tracking-normal ">
             {formatNairaAmount(row.amountNgn)}
           </span>
         ),
@@ -142,13 +152,18 @@ export function TransactionsView() {
   const rowActions = React.useMemo<RowAction<Transaction>[]>(
     () => [
       {
+        label: "View transaction",
+        icon: Eye,
+        onSelect: (row) => setDetailId(row.id),
+      },
+      {
         label: "Edit transaction",
-        icon: Pencil,
+        icon: EditIcon,
         onSelect: (row) => setEditing(row),
       },
       {
         label: "Void transaction",
-        icon: Trash2,
+        icon: BinIcon,
         variant: "destructive",
         onSelect: (row) => setDeleting(row),
       },
@@ -166,13 +181,12 @@ export function TransactionsView() {
             {/* TODO(api-contract): export job with the active filters */}
             <Button
               variant="outline"
-              size="sm"
               onClick={() => toast.success("Export started.")}
             >
-              <Download className="size-4" />
+              <ExportIcon className="size-4" />
               Export CSV
             </Button>
-            <Button size="sm" onClick={() => setCreateOpen(true)}>
+            <Button onClick={() => setCreateOpen(true)}>
               <Plus className="size-4" />
               Add New Record
             </Button>
@@ -194,6 +208,7 @@ export function TransactionsView() {
           emptyMessage="No transactions match these filters."
           rowActions={rowActions}
           rowActionsVariant="inline"
+          onRowClick={(row) => setDetailId(row.id)}
         />
         <TablePagination
           pagination={data?.pagination}
@@ -215,6 +230,10 @@ export function TransactionsView() {
       <DeleteTransactionDialog
         transaction={deleting}
         onOpenChange={(open) => !open && setDeleting(null)}
+      />
+      <TransactionDetailModal
+        transactionId={detailId}
+        onOpenChange={(open) => !open && setDetailId(null)}
       />
     </div>
   );

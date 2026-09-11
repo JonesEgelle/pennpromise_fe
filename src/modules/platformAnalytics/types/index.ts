@@ -6,9 +6,12 @@
  * the real backend (run `npm run sync:schema`) before wiring services /
  * controllers. v1 ships presentational only, fed by lib/mock-data.ts.
  */
-import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 
 import type { AccentTone } from "@/components/shared/visual";
+
+/** Any icon component that accepts `className` — lucide or a project SVG. */
+type IconComponent = ComponentType<{ className?: string }>;
 
 export type TrendRange =
   | "last_7_days"
@@ -19,7 +22,7 @@ export type TrendRange =
 export interface AnalyticsKpi {
   id: string;
   label: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   /** Display-ready (the API may send a formatted string). */
   value: string;
   /** Period-over-period change; null → hide the badge. */
@@ -86,7 +89,7 @@ export interface QuickAction {
   label: string;
   sublabel: string;
   href: string;
-  icon: LucideIcon;
+  icon: IconComponent;
 }
 
 export interface NetworkGauge {

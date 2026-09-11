@@ -100,6 +100,7 @@ function seed(): Row[] {
     enqueuedAt: new Date(
       Date.now() - (index === 0 ? 12 : 72 + index * 30) * 60_000,
     ).toISOString(),
+    documentBadges: ["NIN", "POA"],
     application: entry.application ?? "Onboarding Application",
     nin: `5493 0${(291 + index).toString()} 44${index}`,
     bvn: `2213${(456789 + index).toString()}`,
@@ -138,6 +139,7 @@ function toCase(row: Row): KycCase {
     priority: row.priority,
     status: row.status,
     enqueuedAt: row.enqueuedAt,
+    documentBadges: row.documentBadges,
   };
 }
 

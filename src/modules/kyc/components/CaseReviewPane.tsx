@@ -11,7 +11,10 @@ import { AutoCheckCard } from "@/modules/kyc/components/AutoCheckCard";
 import { CaseAuditLogModal } from "@/modules/kyc/components/CaseAuditLogModal";
 import { DocumentPreview } from "@/modules/kyc/components/DocumentPreview";
 import { ShariaChecklist } from "@/modules/kyc/components/ShariaChecklist";
-import { useDecideKycCase, useKycCase } from "@/modules/kyc/controllers/kycController";
+import {
+  useDecideKycCase,
+  useKycCase,
+} from "@/modules/kyc/controllers/kycController";
 import type {
   ChecklistKey,
   KycCaseDetail,
@@ -65,13 +68,13 @@ function CaseReviewForm({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="grid flex-1 gap-6 lg:grid-cols-2">
+      <div className="grid flex-1 gap-4 lg:grid-cols-[minmax(0,250px)_1fr] ">
         <div className="space-y-4">
           <DocumentPreview documents={caseDetail.documents} />
           <AutoCheckCard autoCheck={caseDetail.autoCheck} />
         </div>
 
-        <div className="space-y-5">
+        <div className="h-full space-y-5  ">
           <ShariaChecklist
             items={checklist}
             onToggle={toggle}
@@ -92,6 +95,7 @@ function CaseReviewForm({
               placeholder="Add a note for the record…"
               aria-invalid={noteError ? true : undefined}
               disabled={decide.isPending}
+              className="shadow-none"
             />
             {noteError ? (
               <p className="text-xs text-destructive">{noteError}</p>
@@ -108,14 +112,18 @@ function CaseReviewForm({
         ) : null}
         <Button
           variant="outline"
-          isLoading={decide.isPending && decide.variables?.decision === "rejected"}
+          isLoading={
+            decide.isPending && decide.variables?.decision === "rejected"
+          }
           disabled={decide.isPending}
           onClick={() => submit("rejected")}
         >
           Reject
         </Button>
         <Button
-          isLoading={decide.isPending && decide.variables?.decision === "approved"}
+          isLoading={
+            decide.isPending && decide.variables?.decision === "approved"
+          }
           disabled={!allChecked || decide.isPending}
           onClick={() => submit("approved")}
         >
@@ -150,7 +158,7 @@ export function CaseReviewPane({ caseId, onDecided }: CaseReviewPaneProps) {
   const { data, isLoading, isError, error } = useKycCase(caseId);
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-border bg-card">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card">
       {!caseId ? (
         <div className="grid flex-1 place-items-center p-6 text-center text-sm text-muted-foreground">
           Select a case from the queue to begin.
@@ -166,7 +174,7 @@ export function CaseReviewPane({ caseId, onDecided }: CaseReviewPaneProps) {
         </div>
       ) : data ? (
         <>
-          <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-3 border-b border-border bg-surface-muted p-5 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <h2 className="truncate text-lg font-semibold text-foreground">
                 {data.applicantName}
@@ -178,22 +186,22 @@ export function CaseReviewPane({ caseId, onDecided }: CaseReviewPaneProps) {
             <div className="flex shrink-0 gap-2">
               <Button
                 variant="outline"
-                size="sm"
                 onClick={() => setAuditOpen(true)}
+                className="rounded-[10px] text-[14px] font-[400]"
               >
                 Audit Log
               </Button>
               <Button
                 variant="outline"
-                size="sm"
                 onClick={() => toast.message("Sharia profile — coming soon.")}
+                className="rounded-[10px] text-[14px] font-[400]"
               >
                 Sharia Profile
               </Button>
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-5">
+          <div className="flex-1 overflow-y-auto p-5 scrollbar-hide">
             {data.status === "reviewing" ? (
               <CaseReviewForm
                 key={data.id}

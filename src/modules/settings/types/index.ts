@@ -49,6 +49,8 @@ export interface ChangeLogEntry {
   at: string;
   title: string;
   detail: string;
+  /** Trailing phrase rendered in the brand tone (e.g. a new role name). */
+  highlight?: string;
   kind: ChangeLogKind;
 }
 

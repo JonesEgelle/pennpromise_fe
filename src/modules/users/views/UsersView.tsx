@@ -1,10 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Download, Pencil, Trash2, UserPlus } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -13,11 +14,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  BinIcon,
+  CalendarIcon,
+  EditIcon,
+  ExportIcon,
+} from "@/components/icons/action-icons";
+import {
   DataTable,
   type Column,
   type RowAction,
 } from "@/components/shared/DataTable";
-import { DataTableToolbar } from "@/components/shared/DataTableToolbar";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { TablePagination } from "@/components/shared/TablePagination";
@@ -39,8 +45,7 @@ export function UsersView() {
   const [page, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(10);
   const [searchInput, setSearchInput] = React.useState("");
-  const [status, setStatus] =
-    React.useState<MemberListParams["status"]>("all");
+  const [status, setStatus] = React.useState<MemberListParams["status"]>("all");
 
   const [createOpen, setCreateOpen] = React.useState(false);
   const [editing, setEditing] = React.useState<Member | null>(null);
@@ -93,10 +98,19 @@ export function UsersView() {
 
   const rowActions = React.useMemo<RowAction<Member>[]>(
     () => [
-      { label: "Edit member", icon: Pencil, onSelect: (row) => setEditing(row) },
+      {
+        label: "View member",
+        icon: Eye,
+        onSelect: (row) => setDetailId(row.memberId),
+      },
+      {
+        label: "Edit member",
+        icon: EditIcon,
+        onSelect: (row) => setEditing(row),
+      },
       {
         label: "Remove member",
-        icon: Trash2,
+        icon: BinIcon,
         variant: "destructive",
         onSelect: (row) => setDeleting(row),
       },
@@ -116,7 +130,7 @@ export function UsersView() {
               size="sm"
               onClick={() => setCreateOpen(true)}
             >
-              <UserPlus className="size-4" />
+              <CalendarIcon className="size-4" />
               Invite Member
             </Button>
             {/* TODO(api-contract): export job with the active filters */}
@@ -125,7 +139,7 @@ export function UsersView() {
               size="sm"
               onClick={() => toast.success("Export started.")}
             >
-              <Download className="size-4" />
+              <ExportIcon className="size-4" />
               Export CSV
             </Button>
           </>
@@ -137,14 +151,21 @@ export function UsersView() {
           <h2 className="text-base font-semibold tracking-tight text-foreground">
             Users/Staffs Informations
           </h2>
-          <DataTableToolbar
-            search={searchInput}
-            onSearchChange={(value) => {
-              setSearchInput(value);
-              setPage(1);
-            }}
-            searchPlaceholder="Search members…"
-          >
+          {/* Search · All Status · Add New User — single aligned row (see Figma). */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="relative sm:w-64">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={searchInput}
+                onChange={(event) => {
+                  setSearchInput(event.target.value);
+                  setPage(1);
+                }}
+                placeholder="Search members…"
+                aria-label="Search members"
+                className="pl-9 shadow-none"
+              />
+            </div>
             <Select
               value={status}
               onValueChange={(value) => {
@@ -152,7 +173,7 @@ export function UsersView() {
                 setPage(1);
               }}
             >
-              <SelectTrigger className="h-10 w-40">
+              <SelectTrigger className="sm:w-40 shadow-none">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -163,11 +184,8 @@ export function UsersView() {
                 ))}
               </SelectContent>
             </Select>
-            <Button size="sm" onClick={() => setCreateOpen(true)}>
-              <UserPlus className="size-4" />
-              Add New User
-            </Button>
-          </DataTableToolbar>
+            <Button onClick={() => setCreateOpen(true)}>Add New User</Button>
+          </div>
         </div>
 
         <DataTable

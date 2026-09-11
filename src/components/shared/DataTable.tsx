@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MoreVertical, type LucideIcon } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -26,17 +26,22 @@ export interface RowAction<Row> {
   /** Per-row disable — used for self-action guards and permission gating. */
   disabled?: (row: Row) => boolean;
   variant?: "default" | "destructive";
-  /** Required when `rowActionsVariant="inline"`; ignored by the menu variant. */
-  icon?: LucideIcon;
+  /**
+   * Required when `rowActionsVariant="inline"`; ignored by the menu variant.
+   * Any icon component that accepts `className` — a `lucide-react` icon or a
+   * project SVG icon from `@/components/icons/*`.
+   */
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
-interface DataTableProps<Row> {
+interface DataTableProps<Row> extends React.ComponentProps<"div"> {
   columns: Column<Row>[];
   data: Row[] | undefined;
   getRowId: (row: Row) => string;
   isLoading?: boolean;
   emptyMessage?: string;
   rowActions?: RowAction<Row>[];
+
   /**
    * `"menu"` (default) renders the `⋮` dropdown. `"inline"` renders each action
    * as an icon button in the cell — the Figma list-page pattern (edit / delete).
@@ -60,11 +65,15 @@ function DataTableInner<Row>({
   rowActions,
   rowActionsVariant = "menu",
   onRowClick,
+  ...props
 }: DataTableProps<Row>) {
   const colCount = columns.length + (rowActions?.length ? 1 : 0);
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-surface">
+    <div
+      className="overflow-x-auto rounded-lg border border-border bg-surface"
+      {...props}
+    >
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/50 text-left">
@@ -87,9 +96,15 @@ function DataTableInner<Row>({
         <tbody>
           {isLoading ? (
             Array.from({ length: 5 }).map((_, rowIndex) => (
-              <tr key={`skeleton-${rowIndex}`} className="border-b border-border">
+              <tr
+                key={`skeleton-${rowIndex}`}
+                className="border-b border-border"
+              >
                 {Array.from({ length: colCount }).map((__, cellIndex) => (
-                  <td key={`skeleton-${rowIndex}-${cellIndex}`} className="px-4 py-3">
+                  <td
+                    key={`skeleton-${rowIndex}-${cellIndex}`}
+                    className="px-4 py-3"
+                  >
                     <Skeleton className="h-4 w-full" />
                   </td>
                 ))}
@@ -119,7 +134,10 @@ function DataTableInner<Row>({
                   {columns.map((column) => (
                     <td
                       key={`${id}-${column.key}`}
-                      className={cn("px-4 py-3 text-foreground", column.className)}
+                      className={cn(
+                        "px-4 py-3 text-foreground tracking-tight",
+                        column.className,
+                      )}
                     >
                       {column.render
                         ? column.render(row)
@@ -129,7 +147,10 @@ function DataTableInner<Row>({
                     </td>
                   ))}
                   {rowActions?.length ? (
-                    <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                    <td
+                      className="px-4 py-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       {rowActionsVariant === "inline" ? (
                         <div className="flex items-center justify-end gap-1">
                           {rowActions.map((action) => {
@@ -159,7 +180,7 @@ function DataTableInner<Row>({
                             aria-label="Row actions"
                             className="grid size-8 place-items-center rounded-md text-muted-foreground outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
                           >
-                            <MoreVertical className="size-4" />
+                            <MoreVertical className="size-4 text-info" />
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             {rowActions.map((action) => (
