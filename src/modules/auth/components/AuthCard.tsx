@@ -1,29 +1,51 @@
+"use client";
+
 import * as React from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+
+/** Shared field styling for the auth forms — grey-filled, flat. */
+export const AUTH_INPUT_CLASS = "h-11 bg-muted shadow-none";
 
 interface AuthCardProps {
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   children: React.ReactNode;
-  footer?: React.ReactNode;
+  /** Show the "Go Back" pill (top-right of the form panel). */
+  showBack?: boolean;
 }
 
-export function AuthCard({ title, subtitle, children, footer }: AuthCardProps) {
+export function AuthCard({
+  title,
+  subtitle,
+  children,
+  showBack,
+}: AuthCardProps) {
+  const router = useRouter();
+
   return (
-    <div className="w-full max-w-md rounded-xl border border-border bg-surface p-6 shadow-sm sm:p-8">
-      <div className="mb-6 space-y-1.5">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
+    <div className="w-full">
+      {showBack ? (
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="absolute right-6 top-8 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-muted lg:right-10 lg:top-12"
+        >
+          <ArrowLeft className="size-4" />
+          Go Back
+        </button>
+      ) : null}
+
+      <div className="space-y-1">
+        <h1 className="text-[28px] font-bold leading-tight text-foreground">
           {title}
         </h1>
         {subtitle ? (
-          <p className="text-sm text-text-secondary">{subtitle}</p>
+          <p className="text-sm text-muted-foreground">{subtitle}</p>
         ) : null}
       </div>
-      {children}
-      {footer ? (
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          {footer}
-        </div>
-      ) : null}
+
+      <div className="mt-6">{children}</div>
     </div>
   );
 }

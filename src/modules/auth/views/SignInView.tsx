@@ -6,10 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/shared/FormInput";
 import { AUTH_ROUTES, APP_ROUTES } from "@/constants/routes";
-import { AuthCard } from "@/modules/auth/components/AuthCard";
+import {
+  AuthCard,
+  AUTH_INPUT_CLASS,
+} from "@/modules/auth/components/AuthCard";
 import { useLogin } from "@/modules/auth/controllers/authController";
 import {
   loginSchema,
@@ -32,42 +36,54 @@ export function SignInView() {
   };
 
   return (
-    <AuthCard
-      title="Sign in"
-      subtitle="Access the PennPromise Capital admin console."
-      footer={
-        <Link
-          href={AUTH_ROUTES.FORGOT_PASSWORD}
-          className="text-info hover:underline"
-        >
-          Forgot your password?
-        </Link>
-      }
-    >
+    <AuthCard title="Get Started!" subtitle="Sign up for a business account">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormInput
             control={form.control}
             name="email"
-            label="Email"
+            label="Email Address"
             type="email"
             autoComplete="email"
-            placeholder="you@pennpromise.com"
+            placeholder="Enter email address"
+            className={AUTH_INPUT_CLASS}
           />
           <FormInput
             control={form.control}
             name="password"
-            label="Password"
+            label="Create password"
             type="password"
             autoComplete="current-password"
-            placeholder="••••••••"
+            placeholder="Enter password"
+            className={AUTH_INPUT_CLASS}
           />
+
+          <div className="flex items-center justify-between text-sm">
+            <label
+              htmlFor="keep-signed-in"
+              className="flex items-center gap-2 text-text-secondary"
+            >
+              <Checkbox
+                id="keep-signed-in"
+                defaultChecked
+                className="size-5 rounded-[5px] border-input data-[state=checked]:border-input data-[state=checked]:bg-transparent data-[state=checked]:text-muted-foreground"
+              />
+              Keep me signed in
+            </label>
+            <Link
+              href={AUTH_ROUTES.FORGOT_PASSWORD}
+              className="text-text-secondary hover:text-foreground"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
           <Button
             type="submit"
-            className="w-full"
+            className="h-11 w-full"
             isLoading={login.isPending}
           >
-            Sign in
+            Continue
           </Button>
         </form>
       </Form>
