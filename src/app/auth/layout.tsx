@@ -12,29 +12,43 @@ export default function AuthLayout({
 }) {
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-2">
-      <div className="bg-sidebar-gradient hidden flex-col justify-between p-10 text-sidebar-foreground lg:flex">
-        <div className="flex items-center gap-2">
-          <span className="grid size-9 place-items-center rounded-md bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground">
-            PP
-          </span>
-          <span className="text-lg font-semibold">PennPromise Capital</span>
+      {/* Branding panel */}
+      <div className="relative hidden overflow-hidden bg-black lg:block">
+        {/* TODO(assets): Glass 1.svg (~30MB) and image 5.svg are raster-in-SVG
+            exports — compress to PNG/WebP before production. */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/auth/image%205.svg')" }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -left-20 h-[68%] w-[135%] bg-contain bg-bottom bg-no-repeat"
+          style={{ backgroundImage: "url('/auth/Glass%201.svg')" }}
+          aria-hidden
+        />
+        <div className="relative z-10 flex h-full flex-col p-12 xl:p-16">
+          <div
+            className="h-10.5 w-52.5 bg-contain bg-left bg-no-repeat"
+            style={{ backgroundImage: "url('/auth/authLogo.svg')" }}
+            role="img"
+            aria-label="PennPromise Capital"
+          />
+          <div className="mt-14 max-w-xl space-y-5">
+            <h2 className="text-4xl font-bold leading-tight text-white">
+              Take Control of Your Business Account.
+            </h2>
+            <p className="max-w-lg text-[15px] leading-relaxed text-white/75">
+              An easier, ethical, and accessible way to invest confidently,
+              giving you the tools, insights, and transparency you need to grow
+              your wealth while staying aligned with your values.
+            </p>
+          </div>
         </div>
-        <div className="space-y-3">
-          <h2 className="text-2xl font-semibold leading-snug">
-            Sharia-compliant fintech operations, under one console.
-          </h2>
-          <p className="max-w-sm text-sm text-sidebar-foreground/80">
-            KYC decisioning, transaction oversight, reconciliation and
-            compliance monitoring for the PennPromise team.
-          </p>
-        </div>
-        <p className="text-xs text-sidebar-foreground/70">
-          Internal use only · Nigeria
-        </p>
       </div>
 
-      <div className="flex items-center justify-center bg-background p-6">
-        {children}
+      {/* Form panel */}
+      <div className="relative flex justify-center bg-background px-6 py-16 lg:px-10 lg:py-24">
+        <div className="w-full max-w-95">{children}</div>
       </div>
     </div>
   );
